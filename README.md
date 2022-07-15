@@ -2,7 +2,7 @@
 ------------------------------------------------------------------------------------------------------------
 Cheats for OS Fedora
 ------------------------------------------------------------------------------------------------------------
-Creating VLAN Interfaces: https://github.com/dimoroz772/Linux_Fedora/blob/main/Creating%20VLAN%20Interfaces
+Creating VLAN Interfaces: https://github.com/dimoroz772/Linux_Fedora/blob/main/Creating_VLAN_Interfaces
 ------------------------------------------------------------------------------------------------------------
 Conky: https://github.com/dimoroz772/Linux_Fedora/blob/main/Conky
 ------------------------------------------------------------------------------------------------------------
