@@ -69,6 +69,7 @@ conky.config = {
 
 conky.text = [[
 ${color white}Uptime:$color $uptime
+CPU: ${acpitemp}°C
 ${color white}Frequency (in MHz):$color $freq
 ${color white}Frequency (in GHz):$color $freq_g
 ${color white}RAM Usage:$color $mem/$memmax - $memperc% ${membar 4}
@@ -119,6 +120,8 @@ double_buffer = true, |#|#| Включчение двойной буфериза
 Конфигурация текста оталась почти без изменения, был поменян цвет текста и добавлена строка с открытыми на данный момент сессиями на данном устройстве.
 
 ${color white}Uptime:$color $uptime |#|#| Время безотказной работы/Время с момента запуска устройства.
+
+CPU: ${acpitemp}°C |#|#| Температура процессора.
 
 ${color white}Frequency (in MHz):$color $freq |#|#| Частота в MHz.
 
