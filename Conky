@@ -144,7 +144,7 @@ ${color white}File systems: |#|#| Текст: File systems(Файловые си
  
  ${color white}Networking: |#|#| Текст: Networking(Сеть).
  
- ${color white}IP адрес:$color ${addr VLAN3} |#|#| IP-адрес VLAN3(вместо "VLAN3" прописываете свой IP-адрес).
+ ${color white}IP адрес:$color ${addr VLAN3} |#|#| IP-адрес VLAN3(вместо "VLAN3" прописываете свой интерфейс).
  
  Up:$color ${upspeed} ${color white} - Down:$color ${downspeed} |#|#| Прием и отдача трафика.
  
