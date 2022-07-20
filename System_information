@@ -1,1 +1,55 @@
+Как посмотреть информацию о системе и ПК?
+ ------------------------------------------------------------------------------------------------------------------------------------------------------
+Заходим в командную строку и вводим команду: screenfetch
+Если такой команды нет, то система придложит установить необходимые пакеты
+ ------------------------------------------------------------------------------------------------------------------------------------------------------
+Заходим в командную строку и вводим команду: neofetch
+Если такой команды нет, то система придложит установить необходимые пакеты
+ ------------------------------------------------------------------------------------------------------------------------------------------------------
+Примеры вывода команд:
 
+[root@pc dmitriy]# neofetch
+             .',;::::;,'.                dmitriy@pc 
+         .';:cccccccccccc:;,.            ------------- 
+      .;cccccccccccccccccccccc;.         OS: Fedora Linux 36 (Workstation Edition) x86_64 
+    .:cccccccccccccccccccccccccc:.       Host: HP ProBook 455 G8 Notebook PC 
+  .;ccccccccccccc;.:dddl:.;ccccccc;.     Kernel: 5.18.11-200.fc36.x86_64 
+ .:ccccccccccccc;OWMKOOXMWd;ccccccc:.    Uptime: 2 hours, 19 mins 
+.:ccccccccccccc;KMMc;cc;xMMc:ccccccc:.   Packages: 1999 (rpm), 2 (flatpak), 15 (snap) 
+,cccccccccccccc;MMM.;cc;;WW::cccccccc,   Shell: bash 5.1.16 
+:cccccccccccccc;MMM.;cccccccccccccccc:   Resolution: 1920x1080 
+:ccccccc;oxOOOo;MMM0OOk.;cccccccccccc:   DE: GNOME 42.3.1 
+cccccc:0MMKxdd:;MMMkddc.;cccccccccccc;   WM: Mutter 
+ccccc:XM0';cccc;MMM.;cccccccccccccccc'   WM Theme: Adwaita 
+ccccc;MMo;ccccc;MMW.;ccccccccccccccc;    Theme: Adwaita [GTK2/3] 
+ccccc;0MNc.ccc.xMMd:ccccccccccccccc;     Icons: Adwaita [GTK2/3] 
+cccccc;dNMWXXXWM0::cccccccccccccc:,      Terminal: gnome-terminal 
+cccccccc;.:odl:.;cccccccccccccc:,.       CPU: AMD Ryzen 7 5800U with Radeon Graphics (16) @ 4.507GHz 
+:cccccccccccccccccccccccccccc:'.         GPU: AMD ATI 05:00.0 Cezanne 
+.:cccccccccccccccccccccc:;,..            Memory: 4221MiB / 7140MiB 
+  '::cccccccccccccc::;,.
+                                                                 
+                                                                 
+
+
+[root@pc dmitriy]# screenfetch
+           /:-------------:\          dmitriy@pc
+        :-------------------::        OS: Fedora 
+      :-----------/shhOHbmp---:\      Kernel: x86_64 Linux 5.18.11-200.fc36.x86_64
+    /-----------omMMMNNNMMD  ---:     Uptime: 2h 19m
+   :-----------sMMMMNMNMP.    ---:    Packages: 2013
+  :-----------:MMMdP-------    ---\   Shell: bash
+ ,------------:MMMd--------    ---:   Resolution: 3840x1080
+ :------------:MMMd-------    .---:   DE: GNOME 42.3
+ :----    oNMMMMMMMMMNho     .----:   WM: Mutter
+ :--     .+shhhMMMmhhy++   .------/   WM Theme: Adwaita
+ :-    -------:MMMd--------------:    GTK Theme: Adwaita [GTK2/3]
+ :-   --------/MMMd-------------;     Icon Theme: Adwaita
+ :-    ------/hMMMy------------:      Font: Cantarell 11
+ :-- :dMNdhhdNMMNo------------;       Disk: 23G / 70G (34%)
+ :---:sdNMMMMNds:------------:        CPU: AMD Ryzen 7 5800U with Radeon Graphics @ 16x 4.507GHz
+ :------:://:-------------::          GPU: AMD RENOIR (LLVM 14.0.0, DRM 3.46, 5.18.11-200.fc36.x86_64)
+ :---------------------://            RAM: 4497MiB / 7140MiB
+ 
+ ------------------------------------------------------------------------------------------------------------------------------------------------------
+ Решайте сами, что вам больше всего подходит для использования в практике)
