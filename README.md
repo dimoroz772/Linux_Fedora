@@ -10,3 +10,5 @@ Folder Access Restriction: https://github.com/dimoroz772/Linux_Fedora/blob/main/
 -------------------------------------------------------------------------------------------------------------------------------
 Change the password of the root user: https://github.com/dimoroz772/Linux_Fedora/blob/main/Change_the_password_of_the_root_user
 -------------------------------------------------------------------------------------------------------------------------------
+System_inforamtion: https://github.com/dimoroz772/Linux_Fedora/blob/main/System_information
+-------------------------------------------------------------------------------------------------------------------------------
