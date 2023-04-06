@@ -79,3 +79,6 @@ case "$choice" in
        show_main_menu
        ;;
   esac
+
+ln /home/user/scripts/script.sh script
+bash script
