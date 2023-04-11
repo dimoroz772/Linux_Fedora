@@ -1,4 +1,5 @@
-
+Написанная программка, для быстрого подключения к серверам.
+-----------------------------------------------------------------
 
 #!/bin/bash
  
@@ -80,5 +81,5 @@ case "$choice" in
        ;;
   esac
 
-ln /home/user/scripts/script.sh script
+ln /home/user/scripts/script.sh /home/user/script
 bash script
