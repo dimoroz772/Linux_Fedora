@@ -195,7 +195,7 @@ crontab -e |#|#| Настройка записей в Crontab
 30 21 * * 3 /home/script/save.sh
 
 Подробную инфромацию по настройке Crontab можно найти: https://xn----7sbbaqhlkm9ah9aiq.net/news-new/gde-nayti-fayl-nastroyki-cron-linux-unix-crontab-file-location.html
-Впринципе, на этом настройка Crontab закончена.
+В принципе, на этом настройка Crontab закончена.
 После внесения изменений в Crontab, службу нужно обязательно перезагрузить.
 systemctl restart crontab |#|#| Команда перезагрузки службы Crontab
 systemctl status crontab.service |#|#| Командка для проверки состояния службы Crontab
