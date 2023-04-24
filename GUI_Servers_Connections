@@ -76,9 +76,6 @@ case "$choice" in
          ;;
     "5") exit
          ;;
-    *) echo "Wrong choice... Please try again."
-       show_main_menu
-       ;;
   esac
 
 ln /home/user/scripts/script.sh /home/user/script
