@@ -1,18 +1,18 @@
 Всем привет! Хочу поделиться информацией о том, какое стороннее ПО я использую на Linux Fedora.
 ---------------
-1 - Angry IP Scanner
-2 - CPU-X
-3 - Drawio
-4 - Firefox
-5 - GNU Image Manipulation Program
-6 - GtkStressTesting
-7 - HPLIP Graphical Tools|hp-uiscan
-8 - Htop
-9 - Krita
-10 - LibreOffice
-11 - MIB Browser
-12 - Notepad
-13 - OBS Studio
+1 - Angry IP Scanner -- Сканер сети
+2 - CPU-X -- Просмотр информации о PC
+3 - Drawio -- ПО для рисовки графиков
+4 - Firefox -- Браузер
+5 - GNU Image Manipulation Program -- Графический редактор
+6 - GtkStressTesting -- ПО для нагрузочного тестирования
+7 - HPLIP Graphical Tools|hp-uiscan -- ПО для работы с принтерами HP
+8 - Htop -- ПО для просмотра запущенных задач на PC
+9 - Krita -- Графический редактор
+10 - LibreOffice -- Офисный пакет
+11 - MIB Browser -- ПО для просмотра иерархии SNMP MIB-переменных в древовидной форме
+12 - Notepad++ -- Текстовый редактор
+13 - OBS Studio 
 14 - PlayOnLinux
 15 - Putty
 16 - RustDesk
