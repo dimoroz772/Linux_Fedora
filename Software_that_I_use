@@ -1,7 +1,7 @@
 Всем привет! Хочу поделиться информацией о том, какое стороннее ПО я использую на Linux Fedora.
 ---------------
-1 - Angry IP Scanner -- Сканер сети
-2 - CPU-X -- Просмотр информации о PC
+1 - Angry IP Scanner -- ПО для сканирования сети
+2 - CPU-X -- ПО для просмотра информации о PC
 3 - Drawio -- ПО для рисовки графиков
 4 - Firefox -- Браузер
 5 - GNU Image Manipulation Program -- Графический редактор
@@ -12,15 +12,15 @@
 10 - LibreOffice -- Офисный пакет
 11 - MIB Browser -- ПО для просмотра иерархии SNMP MIB-переменных в древовидной форме
 12 - Notepad++ -- Текстовый редактор
-13 - OBS Studio 
-14 - PlayOnLinux
-15 - Putty
-16 - RustDesk
-17 - System Profiler and Benchmark
-18 - Telegram Desktop
-19 - Snap Store
-20 - VMware Workstation
-21 - Wine
-22 - WinSCP
-23 - VLC media player
+13 - OBS Studio -- ПО для записи видео и потокового вещания
+14 - PlayOnLinux -- Надстройка над Wine
+15 - Putty -- ПО клиент для различных протоколов удалённого доступа
+16 - RustDesk -- ПО для удаленного доступа и удаленного управления
+17 - System Profiler and Benchmark -- ПО для просмотра информации о PC
+18 - Telegram Desktop -- Мессенджер
+19 - Snap Store - Магазин сторонних приложений для Linux
+20 - VMware Workstation Pro - ПО виртуализации
+21 - Wine -- ПО для установки/запуска Windows-приложений на Linux
+22 - WinSCP -- свободный графический клиент протоколов SFTP и SCP
+23 - VLC media player -- Медиаплеер
 ---------------
