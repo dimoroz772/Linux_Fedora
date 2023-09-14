@@ -1,1 +1,366 @@
-
+<head>
+  <title>Setting up automated backup of active network equipment configurations</title>
+  <link rel="shortcut icon" href="./Fedora_Logo.png" type="image/png">
+</head>
+<style>
+body{
+    background-image: url('Fon_Post.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #333;
+}
+a {
+    text-decoration: none;
+}
+p {
+  text-indent: 1.5em;
+  text-align: justify;
+}
+h2 {
+  font-size: 18px;
+}
+</style>
+<style> 
+table{
+border: 1px black solid;
+}
+th, td {
+  border: 1px solid grey; /*  бахнуть на rgba(255,255,0,0); */
+}
+</style>
+<style>
+    button {
+    position: static;
+    border: 1px solid #808080;
+    font-size: 18px;
+    background-color: rgba(28,28,28,0);
+    transition: 0.5s;
+    }
+    button:hover {
+    background-color: #ff0000;
+    }
+</style>
+ <br/>
+<Center>
+<img src="./Fedora_Logo.png" width="150" height="150"/>
+</Center><br/>
+<h1 align="Center" style="color:rgb(255, 255, 255)"><i>Setting up automated backup of active network equipment configurations</i></h1>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Всем привет! В данном посте рассматривается настройка автоматического резервного копирования конфигураций активного сетевого оборудования.</p></i>
+<br/>
+<Center>
+<h2><i style="color:rgb(255, 255, 255)">Нижеописанный скрипт писался на OC Linux Fedora 36 Workstation</i></h2>
+<h2><i style="color:rgb(255, 255, 255)">Все описанные ниже действия выполнялись под пользователем root</i></h2>
+</Center>>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">Для реализации данного проекта мне потребовалось:</p></i></h2>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">1. Установка/настройка TFTP-сервера;</p></i></h2>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">2. Написание bash-скрипта;</p></i></h2>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">3. Настройка Crontab;</p></i></h2>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">4. Подключение сетевой папки к серверу с бэкапами, перекидывание бэкапов и очистка каталога tftpboot;</p></i></h2>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">5. Ну и сетевые устройства, которые могут работать с протоколом TFTP.</p></i></h2>
+<br/>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">1. Установка/настройка TFTP-сервера.</p></i></h2>
+<html>
+<body>
+<div align="Center">
+<table>
+ <tbody>
+  <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># yum update -y && yum upgrade -y</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Поиск и обновление пакетов системы.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># yum install -y tftp tftp-server.x86_64</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Команда установки необходимых пакетов для tftp-server-a.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># nano /usr/lib/systemd/system/tftp.service</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Команда для редактирования конфигурационного файла tftp.service</i></b></td>
+   </tr>
+   <tr>
+    <th style="color:#ff0000" colspan="2" align="Left"><i style="color:#00ff15">После установки необходимых пакетов заходим в конфигурационный файл /usr/lib/systemd/system/tftp.service и приводим его к следующему виду:</i><br/>
+   <br/>
+[Unit]<br/>
+Description=Tftp Server<br/>
+Requires=tftp.socket<br/>
+Documentation=man:in.tftpd<br/>
+<br/>
+[Service]<br/>
+ExecStart=/usr/sbin/in.tftpd -c -p -s /var/lib/tftpboot<br/>
+StandardInput=socket<br/>
+<br/>
+[Install]<br/>
+WantedBy=multi-user.target<br/>
+Also=tftp.socket </th>
+    </tr>
+  </tbody>
+</table>
+<i style="color:rgb(255, 255, 255)"><p align="Left">После внесения корректировок вводим следующие команды:</p></i>
+<table>
+  <tbody>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># systemctl daemon-reload</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Команда для проверки наличия новых или изменённых юнитов и перезапуска systemd.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># systemctl enable --now tftp-server</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Команда для включения автозагрузки tftp-server-a.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># systemctl status tftp-server</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Команда проверки статуса tftp-server-a.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># chmod 777 /var/lib/tftpboot</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Изменяем права доступа на каталог.</i></b></td>
+   </tr>
+  </tbody>
+</table>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Для систем с работающей с службой <i style="color:#ff0000">Firewalld</i> разрешите порты <i style="color:#ff0000">TFTP</i>:</p></i>
+<table>
+  <tbody>
+   <tr>
+    <th style="color:#ff0000" colspan="2" align="Left" width="1000px">firewall-cmd --add-service=tftp --permanent<br/>firewall-cmd --reload</th>>
+    </tr>
+  </tbody>
+</table>
+<i style="color:rgb(255, 255, 255)"><p align="Left">На данном этапе <i style="color:#ff0000">TFTP-server</i> настроен и функционирует! IP-адресом <i style="color:#ff0000">TFTP-server-a</i> является IP-address сервера. (Возьмём как пример адрес <i style="color:#ff0000">10.10.10.10/24</i>).</p></i>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">2. Написание bash-скрипта.</p></i></h2>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">Скрипт для выгрузки бэкапов из сетевых устройств написан на Bash. Как было написано выше, IP-адрес TFTP-Server-a: 10.10.10.10.</p></i></h2>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">Скрипт написан для следующих сетевых устройств:</p></i></h2>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">1 — ZyXEL GS2220-28HP;</p></i></h2>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">2 — ZyXEL XGS4600-32;</p></i></h2>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">3 — ZyXEL GS2210-24;</p></i></h2>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">4 — D-Link DGS-1210-52 Gigabit Ethernet Switch;</p></i></h2>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">5 — D-Link DGS-1210-52/C1;</p></i></h2>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">6 — D-Link DGS-1210-52;</p></i></h2>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">7 — D-Link DES-3200-26 Fast Ethernet Switch;</p></i></h2>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">8 — Huawei USG6585E.</p></i></h2>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Вам не обязательно пользоваться данными сетевыми устройствами, они могут быть разными. Но! У сетевых устройств обязательно должна быть поддержка:</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">1) FTP/TFTP;</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">2) Подключение к консоли через <i style="color:#ff0000">Telnet</i>.(Если вам очень критично, то можете заменить протокол <i style="color:#ff0000">Telnet</i> на <i style="color:#ff0000">SSH</i>. В моём примере указано подключение по протоколу <i style="color:#ff0000">Telnet</i>).</p></i>
+<table>
+  <tbody>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># touch save.sh</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Создание файла <i style="color:#ff0000">save.sh</i>, в котором будет написан скрипт.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># chmod 777 save.sh</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Выдача всех возможных прав файлу <i style="color:#ff0000">save.sh</i>.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># nano save.sh</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Редактирование файла <i style="color:#ff0000">save.sh</i>.</i></b></td>
+   </tr>
+   <tr>
+    <th style="color:#ff0000" colspan="2" align="Left" width="1000px"><b style="color:#00ff15">Сам скрипт:</b><br/><br/>#!/bin/bash<br/>#Saving switches and firewall settings<br/>.set -x<br/>#Write memory and backuping ZyXEL GS2220-28HP<br/>DATE="$(date +%Y-%m-%d)"<br/>USER="admin"<br/>PASSWD="123456789"<br/>LOG="telnnet_conn.log"<br/>HOSTS="<br/>10.10.10.81<br/>"<br/>for H in $HOSTS<br/>do<br/>echo START SCRIPT: >> $LOG<br/>date +%x-%R >> $LOG<br/>(<br/>sleep 5;echo -en "$USER\r";<br/>sleep 5;<br/>echo -en "$PASSWD\r";<br/>sleep 5;<br/>echo -en "write memory\r";<br/>sleep 60;<br/>echo -en "copy running-config tftp 10.10.10.10 ZyXEL_GS2220-28HP_10.10.10.81_$DATE\r";<br/>sleep 60;<br/>echo -en "exit\r";<br/>sleep 1;<br/>) | telnet $H >> $LOG<br/>echo ========================= >> $LOG<br/>done</th>
+   </tr>
+  </tbody>
+</table>
+   <i style="color:rgb(255, 255, 255)"><p align="Left">Расшифровка:</p></i>
+<table>
+  <tbody>
+   <tr>
+    <td align="Left" style="color:#00ff15" width="800px"><b><i>1. Начинаться любой bash-скрипт всегда должен со строки, указывающий путь к bash-интерпритатору.</i></b></td>
+    <td align="Center" style="color:#ff0000" width="200px"><b><i>#!/bin/bash</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#00ff15" width="800px"><b><i>2. Включаем режим отладки, прописав <i style="color:#ff0000">set -x</i> (позволяет наблюдать за ходом выполнения скрипта в терминале).</i></b></td>
+    <td align="Center" style="color:#ff0000" width="200px"><b><i>set -x</i></b></td>
+   </tr>
+   <tr>
+    <th style="color:#00ff15" colspan="2" align="Left" width="1000px">3. Задаем входные данные. В нашем случае это имя пользователя <i style="color:#ff0000">(USER)</i>, дата <i style="color:#ff0000">(DATE)</i>, пароль <i style="color:#ff0000">(PASSWD)</i>, названия файла, в который будет собираться вывод команд <i style="color:#ff0000">(telnnet_conn.log)</i>, и ip-адреса, к которым будем подключаться телнетом <i style="color:#ff0000">(HOSTS)</i>.</th>
+   </tr>
+   <tr>
+    <th style="color:#00ff15" colspan="2" align="Left" width="1000px">4. Для организации подключения сделаем цикл с перебором ip-адресов.</th>
+   </tr>
+   <tr>
+    <th style="color:#ff0000" colspan="2" align="Left" width="1000px">for H in $HOSTS<br/>do<br/>#Тело цикла (выполняемые операции в цикле)<br/>done</th>
+   </tr>
+   <tr>
+    <th style="color:#00ff15" colspan="2" align="Left" width="1000px">5. Для удобства обработки вывода команд добавим строчку начала скрипта, используя <i style="color:#ff0000">echo</i> и дату и время начала выполнения.</th>
+   </tr>
+   <tr>
+    <th style="color:#ff0000" colspan="2" align="Left" width="1000px">echo START SCRIPT: >> $LOG<br/>date +%x-%R >> $LOG</th>
+   </tr>
+   <tr>
+    <th style="color:#00ff15" colspan="2" align="Left" width="1000px">6. Теперь начинается основная часть работы скрипта. Укажем команды, которые мы хотели бы, чтобы скрипт вводил за нас, а именно ввод логина, пароля, сохранения текущей конфигурации устройства в <i style="color:#ff0000">NVRAM</i> и отправка сохраненного конфигурационного файла устройства на <i style="color:#ff0000">TFTP-Server</i>. Команда <i style="color:#ff0000">sleep (5,60,1)</i> используется чтобы расставить паузы при выполнение команд.</th>
+   </tr>
+   <tr>
+    <th style="color:#ff0000" colspan="2" align="Left" width="1000px">(<br/>sleep 5;<br/>echo -en "$USER\r";<br/>sleep 5;<br/>echo -en "$PASSWD\r";<br/>sleep 5;<br/>echo -en "write memory\r";<br/>sleep 60;<br/>echo -en "copy running-config tftp 10.10.10.10 ZyXEL_GS2220-28HP_10.10.10.81_$DATE\r";<br/>sleep 60;<br/>echo -en "exit\r";<br/>sleep 1;<br/>) | telnet $H >> $LOG</th>
+   </tr>
+   <tr>
+    <th style="color:#00ff15" colspan="2" align="Left" width="1000px">7. Для удобства чтения выведем разделитель (=========), используя <i style="color:#ff0000">echo</i>.</th>
+   </tr>
+   <tr>
+    <th style="color:#ff0000" colspan="2" align="Left" width="1000px">echo ========================= >> $LOG<br/>done</th>
+   </tr>
+  </tbody>
+</table>
+   <i style="color:rgb(255, 255, 255)"><p align="Left">Далее выкладывать и расписывать скрипт весь/целиком не вижу смысла, т.к. порядок скрипта повторяется. Как исключение, выложу команды для различных устройств:</p></i>
+<table>
+  <tbody>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="950px"><b><i style="color:#00ff15">ZyXEL GS2220-28HP</i><br/> <br/> <br/><i>write memory<br/>copy running-config tftp 10.10.10.10 ZyXEL_GS2220-28HP_10.10.10.81<br/>exit</i></b></td>
+    <td align="Left" style="color:#00ff15" width="50px"><b><i>Команды для сохранения backup-a конфигурации на <i style="color:#ff0000">TFTP-сервер</i> с сетевого устройства <i style="color:#ff0000">ZyXEL GS2220-28HP</i>.<br/> <br/><i style="color:#ff0000">ZyXEL_GS2220-28HP_10.10.10.81</i> — это наименование бэкап-файла на <i style="color:#ff0000">TFTP-Server-e</i>.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="950px"><b><i style="color:#00ff15">ZyXEL XGS4600-32</i><br/> <br/> <br/><i>write memory<br/>copy running-config tftp 10.10.10.10 ZyXEL_XGS4600-32_10.10.10.82<br/>exit</i></b></td>
+    <td align="Left" style="color:#00ff15" width="50px"><b><i>Команды для сохранения backup-a конфигурации на <i style="color:#ff0000">TFTP-сервер</i> с сетевого устройства <i style="color:#ff0000">ZyXEL XGS4600-32</i>.<br/> <br/><i style="color:#ff0000">ZyXEL_XGS4600-32_10.10.10.82</i> — это наименование бэкап-файла на <i style="color:#ff0000">TFTP-Server-e</i>.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="950px"><b><i style="color:#00ff15">ZyXEL GS2210-24</i><br/> <br/> <br/><i>write memory<br/>copy running-config tftp 10.10.10.10 ZyXEL_GS2210-24_10.10.10.83<br/>exit</i></b></td>
+    <td align="Left" style="color:#00ff15" width="50px"><b><i>Команды для сохранения backup-a конфигурации на <i style="color:#ff0000">TFTP-сервер</i> с сетевого устройства <i style="color:#ff0000">ZyXEL GS2210-24</i>.<br/> <br/><i style="color:#ff0000">ZyXEL_GS2210-24_10.10.10.83</i> — это наименование бэкап-файла на <i style="color:#ff0000">TFTP-Server-e</i>.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="950px"><b><i style="color:#00ff15">D-Link DGS-1210-52 Gigabit Ethernet Switch</i><br/> <br/> <br/><i>save<br/>upload cfg_toTFTP 10.10.10.10 D-Link_DGS-1210-52_10.10.10.84<br/>logout</i></b></td>
+    <td align="Left" style="color:#00ff15" width="50px"><b><i>Команды для сохранения backup-a конфигурации на <i style="color:#ff0000">TFTP-сервер</i> с сетевого устройства <i style="color:#ff0000">D-Link DGS-1210-52 Gigabit Ethernet Switch</i>.<br/> <br/><i style="color:#ff0000">D-Link_DGS-1210-52_10.10.10.84</i> — это наименование бэкап-файла на <i style="color:#ff0000">TFTP-Server-e</i>.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="950px"><b><i style="color:#00ff15">D-Link DGS-1210-52/C1</i><br/> <br/> <br/><i>save<br/>upload cfg_toTFTP 10.10.10.10 D-Link_DGS-1210-52_C1_10.10.10.85<br/>logout</i></b></td>
+    <td align="Left" style="color:#00ff15" width="50px"><b><i>Команды для сохранения backup-a конфигурации на <i style="color:#ff0000">TFTP-сервер</i> с сетевого устройства <i style="color:#ff0000">D-Link DGS-1210-52/C1</i>.<br/> <br/><i style="color:#ff0000">D-Link_DGS-1210-52_C1_10.10.10.85</i> — это наименование бэкап-файла на <i style="color:#ff0000">TFTP-Server-e</i>.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="950px"><b><i style="color:#00ff15">D-Link DES-3200-26 Fast Ethernet Switch</i><br/> <br/> <br/><i>save all<br/>upload cfg_toTFTP 10.10.10.10 dest_file D-Link_DES-3200-26_10.10.10.86<br/>logout</i></b></td>
+    <td align="Left" style="color:#00ff15" width="50px"><b><i>Команды для сохранения backup-a конфигурации на <i style="color:#ff0000">TFTP-сервер</i> с сетевого устройства <i style="color:#ff0000">D-Link DES-3200-26 Fast Ethernet Switch</i>.<br/> <br/><i style="color:#ff0000">D-Link_DES-3200-26_10.10.10.86</i> — это наименование бэкап-файла на <i style="color:#ff0000">TFTP-Server-e</i>.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="950px"><b><i style="color:#00ff15">Huawei USG6585E</i><br/> <br/> <br/><i>save config.cfg<br/>tftp 10.10.10.10 put config.cfg backup.cfg<br/>quit</i></b></td>
+    <td align="Left" style="color:#00ff15" width="50px"><b><i>Команды для сохранения backup-a конфигурации на <i style="color:#ff0000">TFTP-сервер</i> с сетевого устройства <i style="color:#ff0000">Huawei USG6585E</i>.<br/> <br/><i style="color:#ff0000">backup.cfg</i> — это наименование бэкап-файла на <i style="color:#ff0000">TFTP-Server-e</i>.</i></b></td>
+   </tr>
+  </tbody>
+</table>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Все бэкапы после запуска скрипта будут отправляться на TFTP-Server в каталог: <i style="color:#ff0000">/var/lib/tftpboot/</i></p></i>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">3. Установка/настройка Crontanb.</p></i></h2>
+<table>
+  <tbody>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># yum install -y cronie</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Установка Crontab.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># systemctl enable crond</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Добавление службы Crontab в автозапуск</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># systemctl start crond</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Запуск службы Crontab</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># crontab -e</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Настройка записей в Crontab</i></b></td>
+   </tr>
+  </tbody>
+</table>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Мой скрипт называется <i style="color:#ff0000">save.sh</i>, то соответственно настройка на запуск скрипта в каждую среду, в 9 часов 30 минут вечера каждой недели будет выглядеть следующим образом:</p></i>
+<table>
+  <tbody>
+   <tr>
+    <th style="color:#ff0000" colspan="2" align="Left" width="1000px">30 21 * * 3 /home/script/save.sh</th>
+   </tr>>
+    </tbody>
+  </table>
+  <i style="color:rgb(255, 255, 255)"><p align="Left">Подробную инфромацию по настройке Crontab можно найти на <a href="https://xn----7sbbaqhlkm9ah9aiq.net/news-new/gde-nayti-fayl-nastroyki-cron-linux-unix-crontab-file-location.html" style="color:#00ff15">следующем сайте.</a></p></i>  
+  <i style="color:rgb(255, 255, 255)"><p align="Left">В принципе, на этом настройка Crontab закончена. После внесения изменений в Crontab, службу нужно обязательно перезагрузить.</p></i>
+  <table>
+    <tbody>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># systemctl restart crontab</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Команда перезагрузки службы Crontab.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># systemctl status crontab.service</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Команда для проверки состояния службы Crontab.</i></b></td>
+   </tr>
+  </tbody>
+</table>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">4. Подключение сетевой папки к серверу с бэкапами, перенос бэкапов и очистка каталога tftpboot.</p></i></h2>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Для хранения конфигурационных файлов можно использовать и каталог tftpboot, но нужно же делать все по красоте!) Поэтому было принято решение сделать хранилку на nfs-сервере. В данном случае nfs-сервер я не поднимал. На nfs-сервере в конфигурационном файле, был добавлен ip-адрес сервера с бэкапами(<i style="color:#ff0000">10.10.10.10</i>) в белый список. Поэтому никаких учетных данных для входа мне не понадобилось. Пусть ip-адрес nfs-сервера будет: <i style="color:#ff0000">10.10.10.50</i>.</p></i>
+<table>
+  <tbody>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># nano /etc/fstab</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Конфигурационный файл, в котором будет прописана строчка с монтированием нужного каталога при включение сервера с бэкапами.</i></b></td>
+   </tr>
+  </tbody>
+</table>
+<i style="color:rgb(255, 255, 255)"><p align="Left">В конце файла <i style="color:#ff0000">fstab</i> прописываем следующую строку:</p></i>
+<table>
+  <tbody>
+  <tr>
+    <th style="color:#ff0000" colspan="2" align="Left" width="1000px">10.10.10.50:/mnt/backup/ss /mnt nfs default 0 0</th>
+  </tr>
+  </tbody>
+</table>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Расшифровка:</p></i>
+<table>
+  <tbody>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i>10.10.10.50</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>IP-адрес nfs-сервера.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i>/mnt/backup/ss</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Созданный каталог на nfs-сервере.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i>/mnt</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Каталог на сервер с бэкапами, куда примонтируется каталог из nfs-сервера <i style="color:#ff0000">/mnt/backup/ss</i>. Т.е. в конечном итоге мы получим на сервере с бэкапами каталог <i style="color:#ff0000">mnt</i>, в который примонтированна папка <i style="color:#ff0000">ss</i> с файлами. В каталоге <i style="color:#ff0000">mnt</i> мы увидим файлы из папки <i style="color:#ff0000">ss</i>.</i></b></td>
+   </tr>
+  </tbody>
+</table>
+<i style="color:rgb(255, 255, 255)"><p align="Left">После внесенных изменений в конфигурационный файл <i style="color:#ff0000">fstab</i> сохраняем его и выходим.</p></i>
+<table>
+  <tbody>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># showmount -e 10.10.10.50</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Данной командой можно воспользоваться для проверки доступности соединения к каталогам nfs-сервера.</i></b></td>
+   </tr>
+  </tbody>
+</table>
+<i style="color:rgb(255, 255, 255)"><p align="Left">После проверки правильности написанной строки в конфигурационном файле <i style="color:#ff0000">fstab</i>, можно уйти и на перезагрузку!</p></i>
+<table>
+  <tbody>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># reboot</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i> Команда для перезагрузки ОС.</i></b></td>
+   </tr>
+  </tbody>
+</table>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Если вы работаете в графической оболочке Fedora, то при правильном написании пути в файле <i style="color:#ff0000">fstab</i>, у вас ОС прогрузится, если же нет, то у вас появится терминал, воспользуясь которым вы должны будете найти ошибку!</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Для проверки можете зайти в каталог <i style="color:#ff0000">mnt</i> и если у вас что-то было в папке <i style="color:#ff0000">ss</i>, то содержимое появится и в каталоге <i style="color:#ff0000">mnt</i>.</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Далее идём к копированию папки <i style="color:#ff0000">tftpboot</i> вместе со всем её содержимым на nfs-сервер. Т.е. в каталог "/mnt".<br/>P.S. Следующие команды для удобства можете добавить в тот же скрипт "save.sh".</p></i>
+<table>
+  <tbody>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># cp -R /var/lib/tftpboot /mnt</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Данная команда копирует все содержимое, которое находится в каталоге <i style="color:#ff0000">tftpboot</i> вместе с папкой <i style="color:#ff0000">tftpboot</i> в каталог <i style="color:#ff0000">mnt</i>. Т.е. после ввода данной команды в каталоге <i style="color:#ff0000">mnt</i> будет лежать папка <i style="color:#ff0000">tftpboot</i> со всем её содержимым.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># chmod 777 /mnt</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Выдадим все возможные права каталогу <i style="color:#ff0000">mnt</i>.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># chmod 777 /mnt/tftpboot</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Выдадим все возможные права каталогу <i style="color:#ff0000">tftpboot</i>.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># mv /mnt/tftpboot /mnt/Backups_$(date +%d.%m.%Y)</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Данная команда отвечает за переименование каталога <i style="color:#ff0000">tftpboot</i> на имя <i style="color:#ff0000">Backups_22.07.2022</i>.</i></b></td>
+   </tr>
+   <tr>
+    <td align="Left" style="color:#ff0000" width="400px"><b><i># rm -rf /var/lib/tftpboot/*</i></b></td>
+    <td align="Left" style="color:#00ff15" width="600px"><b><i>Данной командой можно очистить каталог <i style="color:#ff0000">tftpboot</i> от старых конфигурационных файлов.</i></b></td>
+   </tr>
+ </tbody>
+</table>
+<i style="color:rgb(255, 255, 255)"><p align="Left">На этом пост завершён! Спасибо за внимание! Надеюсь, что кому-нибудь этот мануал пригодится)</p></i>
+</div>
+</body>
+</html>
+ <br/>
+<button><i><a href="https://dimoroz772.github.io/Linux_Fedora/" style="color:#F0F8FF"><b>Back</b></a><br/><i/></button>
