@@ -1,1 +1,77 @@
-
+<head>
+  <title>RustDesk</title>
+  <link rel="shortcut icon" href="./Fedora_Logo.png" type="image/png">
+</head>
+<style>
+body{
+    background-image: url('Fon_Post.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #333;
+}
+a {
+    text-decoration: none;
+}
+p {
+  text-indent: 1.5em;
+  text-align: justify;
+}
+h2 {
+  font-size: 18px;
+}
+</style>
+<style> 
+table{
+border: 1px black solid;
+}
+th, td {
+  border: 1px solid grey; /*  бахнуть на rgba(255,255,0,0); */
+}
+</style>
+<style>
+    button {
+    position: static;
+    border: 1px solid #808080;
+    font-size: 18px;
+    background-color: rgba(28,28,28,0);
+    transition: 0.5s;
+    }
+    button:hover {
+    background-color: #ff0000;
+    }
+</style>
+ <br/>
+<Center>
+<img src="./Fedora_Logo.png" width="150" height="150"/>
+</Center><br/>
+<h1 align="Center" style="color:rgb(255, 255, 255)"><i>RustDesk</i></h1>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Всем привет! В данном посте рассматривается ПО для подключения к удалённым рабочим столам.</p></i>
+<br/>
+<Center>
+<h2><i style="color:rgb(255, 255, 255)">Нижеописанное ПО рассматривалось на OC Linux Fedora 36 Workstation</i></h2>
+<h2><i style="color:rgb(255, 255, 255)">Все описанные ниже действия выполнялись под пользователем root</i></h2>
+</Center>
+<h2><i style="color:rgb(255, 255, 255)"><p align="Left">Hello!</p></i></h2>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Каждому из нас в какой-либо день может потребоваться удаленный доступ к рабочему столу своего ПК, будь то это рабочее место или же просто ПК дома. Конечно, вы можете сказать, что есть такие приложения как: <i style="color:#ff0000">AnyDesk</i>, <i style="color:#ff0000">TeamViewer</i>, <i style="color:#ff0000">Remmina</i> и т.п. Но мне было нужно Open source-ное решение, которое позволит мне подключиться к удаленному рабочему столу с любой точки страны(даже с помощью телефона).</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Перейдём к делу! <i style="color:#ff0000">RustDesk</i>! Всю инфу можно найти на <a href="https://rustdesk.com/" style="color:#ff0000">официальном сайте</a>.</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Также все установочные пакеты от разработчиков данного ПО находятся на <a href="https://github.com/rustdesk/rustdesk/releases" style="color:#ff0000">GitHub</a>.</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Я для OC Linux Fedora 36 скачивал установочный пакет: <a style="color:#ff0000">rustdesk-1.1.9-fedora28-centos8.rpm</a>(на момент 05.09.2022).</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Все установилось и запустилось с первого раза!</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Теперь перейдём к самому интересному, к запуску ПО и подключению к удаленному рабочему столу. Если хотите в любой момент иметь удаленный доступ к ПК, то приучите себя работать в OC Linux Fedora под оболочкой c применением <a style="color:#ff0000">Xorg</a>. P.S.(Заметил фичу, переключение раскладки языка на иксах переключается также одним нажатием комбинации клавиш <a style="color:#ff0000">ALT</a>+<a style="color:#ff0000">SHIFT</a>, в обычной оболочке <a style="color:#ff0000">GNOME</a> нужно двойное нажатие клавиш).</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left"><a style="color:#ff0000">Xorg</a> - это метапакет, который предоставляет компоненты для рабочей станции под управлением <a style="color:#ff0000">X Window System</a>.</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left"><a style="color:#ff0000">X Window System/X-сервер</a> - это набор пакетов обеспечивающих приём от пользователя управляющих сигналов с клавиатуры, мышки и отрисовку экрана(нов). Лично мне нравится пользоваться графической оболочкой <a style="color:#ff0000">Gnome</a>, поэтому я выбрал работу под оболочкой <a style="color:#ff0000">Gnome на Xorg</a>.</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Выбрав оболочку, логинимся и по необходимости запускаем ПО <a style="color:#ff0000">RustDesk</a>. На устройстве, с которого будет осуществляться соединение, вводим следующие данные:</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">1 - Удаленный идентификатор;</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">2 - Пароль, который можно посмотреть на устройстве, к которому осуществляется подключение.</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">В принципе, подключение к удаленному рабочему столу однообразное как и у подобных <a style="color:#ff0000">RustDesk</a> программ) По поводу функционала не вижу смысла разглагольствоватсья, т.к. опять же все однообразное, все необходимое имеется)</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Для Android ПО RustDesk можно скачать как из Google Play(на момент 05.09.2022), так и из <a href="https://github.com/rustdesk/rustdesk/releases" style="color:#ff0000">GitHub</a> </p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">На этом всё! Thank you very much!)</p></i>
+</div>
+</body>
+</html>
+ <br/>
+<button><i><a href="https://dimoroz772.github.io/Linux_Fedora/" style="color:#F0F8FF"><b>Back</b></a><br/><i/></button>
