@@ -1,1 +1,148 @@
-
+<head>
+  <title>GUI Servers Connections</title>
+  <link rel="shortcut icon" href="./Fedora_Logo.png" type="image/png">
+</head>
+<style>
+body{
+    background-image: url('Fon_Post.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #333;
+}
+a {
+    text-decoration: none;
+}
+p {
+  text-indent: 1.5em;
+  text-align: justify;
+}
+h2 {
+  font-size: 18px;
+}
+</style>
+<style> 
+table{
+border: 1px black solid;
+}
+th, td {
+  border: 1px solid grey; /*  бахнуть на rgba(255,255,0,0); */
+}
+</style>
+<style>
+    button {
+    position: static;
+    border: 1px solid #808080;
+    font-size: 18px;
+    background-color: rgba(28,28,28,0);
+    transition: 0.5s;
+    }
+    button:hover {
+    background-color: #ff0000;
+    }
+</style>
+ <br/>
+<Center>
+<img src="./Fedora_Logo.png" width="150" height="150"/>
+</Center><br/>
+<h1 align="Center" style="color:rgb(255, 255, 255)"><i>GUI Servers Connections</i></h1>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Всем привет! В данном посте показана структура программки для быстрого подключения к серверам.</p></i>
+<br/>
+<Center>
+<h2><i style="color:rgb(255, 255, 255)">Нижеописанная инструкция писалась на OC Linux Fedora Server 36</i></h2>
+<h2><i style="color:rgb(255, 255, 255)">Все описанные ниже действия выполнялись под пользователем root</i></h2>
+</Center>
+<table>
+ <tbody>
+  <tr>
+    <th style="color:#ff0000" colspan="2" align="Left" width="1000px"><br/>
+      #!/bin/bash<br/>
+      <br/>
+      # clear the screen<br/>
+      tput clear<br/>
+      <br/>
+      # Move cursor to screen location X,Y (top left is 0,0)<br/>
+      tput cup 3 15<br/>
+      <br/>
+      # Set a foreground colour using ANSI escape<br/>
+      tput setaf 1<br/>
+      echo "GUI Servers connections"<br/>
+      tput sgr0<br/>
+      <br/>
+      tput cup 5 15<br/>
+      # Set reverse video mode<br/>
+      tput rev<br/>
+      tput setaf 1<br/>
+      echo "W-I-N-D-O-W-S |#|#| S-E-R-V-E-R-S"<br/>
+      tput sgr0<br/>
+      <br/>
+      tput setaf 1<br/>
+      tput cup 7 15<br/>
+      echo "1. Windows Server #1"<br/>
+      <br/>
+      tput cup 9 15<br/>
+      # Set reverse video mode<br/>
+      tput rev<br/>
+      tput setaf 1<br/>
+      echo "L-I-N-U-X |#|#| S-E-R-V-E-R-S"<br/>
+      tput sgr0<br/>
+      <br/>
+      tput setaf 1<br/>
+      tput cup 11 15<br/>
+      echo "2. Linux Server #1"<br/>
+      <br/>
+      tput setaf 1<br/>
+      tput cup 13 15<br/>
+      echo "3. Linux Server #2"<br/>
+      <br/>
+      tput setaf 1<br/>
+      tput cup 15 15<br/>
+      echo "4. Linux Server #3"<br/>
+      <br/>
+      tput cup 17 15<br/>
+      # Set reverse video mode<br/>
+      tput rev<br/>
+      tput setaf 1<br/>
+      echo "F U N C T I O N S"<br/>
+      tput sgr0<br/>
+      <br/>
+      tput setaf 1<br/>
+      tput cup 19 15<br/>
+      echo "5. Exit"<br/>
+      <br/>
+      # Set bold mode<br/>
+      tput setaf 7<br/>
+      tput bold<br/>
+      tput cup 21 15<br/>
+      read -p "Enter your choice: " choice<br/>
+      <br/>
+      tput clear<br/>
+      tput sgr0<br/>
+      tput rc<br/>
+      <br/>
+      case "$choice" in<br/>
+          "1") xfreerdp /v:10.10.10.10 /u:admin /p:password /size:97%h<br/>
+               ;;<br/>
+          "2") sshpass -p password ssh root@10.10.10.11<br/>
+               ;;<br/>
+          "3") ssh -i /home/larry/.ssh/larry larry@10.10.10.12<br/>
+               ;;<br/>
+          "4") ssh -i /home/larry/.ssh/larry larry@10.10.10.13<br/>
+               ;;<br/>
+          "5") exit<br/>
+               ;;<br/>
+        esac<br/>
+        <br/>
+      ln /home/user/scripts/script.sh /home/user/script<br/>
+      bash script</th>
+  </tr>
+ </tbody>
+</table>
+</div>
+</body>
+</html>
+ <br/>
+<button><i><a href="https://dimoroz772.github.io/Linux_Fedora/" style="color:#F0F8FF"><b>Back</b></a><br/><i/></button>
