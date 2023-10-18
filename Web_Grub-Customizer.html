@@ -1,1 +1,95 @@
-
+<head>
+  <title>Grub-Customizer</title>
+  <link rel="shortcut icon" href="./Fedora_Logo.png" type="image/png">
+</head>
+<style>
+body{
+    background-image: url('Fon_Post.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #333;
+}
+a {
+    text-decoration: none;
+}
+p {
+  text-indent: 1.5em;
+  text-align: justify;
+}
+h2 {
+  font-size: 19px;
+}
+</style>
+<style> 
+table{
+border: 1px black solid;
+}
+th, td {
+  border: 1px solid grey; /*  бахнуть на rgba(255,255,0,0); */
+}
+</style>
+<style>
+    button {
+    position: static;
+    border: 1px solid #808080;
+    font-size: 18px;
+    background-color: rgba(28,28,28,0);
+    transition: 0.5s;
+    }
+    button:hover {
+    background-color: #ff0000;
+    }
+</style>
+ <br/>
+<Center>
+<img src="./Fedora_Logo.png" width="150" height="150"/>
+</Center><br/>
+<h1 align="Center" style="color:rgb(255, 255, 255)"><i>Grub-Customizer</i></h1>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Всем привет! В данном посте рассматривается установка и настройка пакета "Grub-Customizer" на OC Linux Fedora Workstation 38.</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Заходим в командную строку.</p></i>
+<html>
+<body>
+<div align="Center">
+<table>
+ <tbody>
+  <tr>
+   <td align="Left" style="color:#ff0000" width="400px"><b><i># su</i></b></td>
+   <td align="Left" style="color:#00ff15" width="600px"><b><i>Выполните команду su и введите пароль от root пользователя.</i></b></td>
+  </tr>
+  <tr>
+   <td align="Left" style="color:#ff0000" width="400px"><b><i># yum install -y grub-customizer</i></b></td>
+   <td align="Left" style="color:#00ff15" width="600px"><b><i>Команда для установки пакета Grub-Customizer</i></b></td>
+  </tr>
+  <tr>
+   <td align="Left" style="color:#ff0000" width="400px"><b><i># nano /etc/default/grub</i></b></td>
+   <td align="Left" style="color:#00ff15" width="600px"><b><i>Команда для перехода в конфигурационный файл загрузчик операционной системы. Нужно внести правки в конфигурационный файл GRUB-загрузчика для того, чтобы в ПО "grub-customizer" показались все разделы загрузки Linux Fedora и их можно было редактировать.</i></b></td>
+  </tr>
+ </tbody>
+</table>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Далее заменяем в строке GRUB_ENABLE_BLSCFG="true" заменяем значение "true" на "false". Должен получиться такой файл:</p></i>
+<table>
+  <tbody>
+   <tr>
+      <th style="color:#00ff15" colspan="2" align="Left" width="1000px"><i>GRUB_TIMEOUT="5"<br/>
+GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"<br/>
+GRUB_DEFAULT="saved"<br/>
+GRUB_DISABLE_SUBMENU="true"<br/>
+GRUB_TERMINAL_OUTPUT="console"<br/>
+GRUB_CMDLINE_LINUX="rhgb quiet"<br/>
+GRUB_DISABLE_RECOVERY="true"<br/>
+GRUB_ENABLE_BLSCFG="false"</i></th>
+    </tr>
+  </tbody>
+</table>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Сохраняем файл ↑ и выходим в командную строку.</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Далее вводим в командной строке вводим команду "grub-customizer", ждем открытия ПО и меняем нужные настройки.</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Всем спасибо за внимание!</p></i>
+</div>
+</body>
+</html>
+ <br/>
+<button><i><a href="https://dimoroz772.github.io/Linux_Fedora/" style="color:#F0F8FF"><b>Back</b></a><br/><i/></button>
