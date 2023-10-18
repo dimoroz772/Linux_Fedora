@@ -70,18 +70,18 @@ th, td {
   </tr>
  </tbody>
 </table>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Далее заменяем в строке <i style="color:#00ff15">GRUB_ENABLE_BLSCFG=</i><i style="color:#ff0000">"true"</i> заменяем значение "true" на "false". Должен получиться такой файл:</p></i>
+<i style="color:rgb(255, 255, 255)"><p align="Left">Далее заменяем в строке <i style="color:#00ff15">GRUB_ENABLE_BLSCFG=</i><i style="color:#ff0000">"true"</i> заменяем значение <i style="color:#ff0000">"true"</i> на <i style="color:#ff0000">"false"</i>. Должен получиться такой файл:</p></i>
 <table>
   <tbody>
    <tr>
-      <th style="color:#00ff15" colspan="2" align="Left" width="1000px"><i>GRUB_TIMEOUT="5"<br/>
-GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"<br/>
-GRUB_DEFAULT="saved"<br/>
-GRUB_DISABLE_SUBMENU="true"<br/>
-GRUB_TERMINAL_OUTPUT="console"<br/>
-GRUB_CMDLINE_LINUX="rhgb quiet"<br/>
-GRUB_DISABLE_RECOVERY="true"<br/>
-GRUB_ENABLE_BLSCFG="false"</i></th>
+      <th style="color:#00ff15" colspan="2" align="Left" width="1000px"><i>GRUB_TIMEOUT=<i style="color:#ff0000">"5"</i><br/>
+GRUB_DISTRIBUTOR=<i style="color:#ff0000">"$(sed 's, release .*$,,g' /etc/system-release)"</i><br/>
+GRUB_DEFAULT=<i style="color:#ff0000">"saved"</i><br/>
+GRUB_DISABLE_SUBMENU=<i style="color:#ff0000">"true"</i><br/>
+GRUB_TERMINAL_OUTPUT=<i style="color:#ff0000">"console"</i><br/>
+GRUB_CMDLINE_LINUX=<i style="color:#ff0000">"rhgb quiet"</i><br/>
+GRUB_DISABLE_RECOVERY=<i style="color:#ff0000">"true"</i><br/>
+GRUB_ENABLE_BLSCFG=<i style="color:#ff0000">"false"</i></th>
     </tr>
   </tbody>
 </table>
