@@ -25,3 +25,5 @@
 <i> <a href="https://github.com/dimoroz772/Linux_Fedora/blob/main/GUI_Servers_Connections"><b>GUI Servers Connections</b></a><br/><i/>
  <br/>
 <i> <a href="https://github.com/dimoroz772/Linux_Fedora/blob/main/Software_that_I_use"><b>Software that I use</b></a><br/><i/>
+ <br/>
+<i> <a href="https://github.com/dimoroz772/Linux_Fedora/blob/main/Grub-Customizer"><b>Grub-Customizer</b></a><br/><i/>
