@@ -29,3 +29,5 @@
 <i> <a href="https://github.com/dimoroz772/Linux_Fedora/blob/main/Grub-Customizer"><b>Grub-Customizer</b></a><br/><i/>
  <br/>
 <i> <a href="https://github.com/dimoroz772/Linux_Fedora/blob/main/Docker%2BPortainer"><b>Docker+Portainer</b></a><br/><i/>
+ <br/>
+<i> <a href="https://github.com/dimoroz772/Linux_Fedora/blob/main/Installing_NetBox_in_Docker"><b>Installing NetBox in Docker</b></a><br/><i/>
