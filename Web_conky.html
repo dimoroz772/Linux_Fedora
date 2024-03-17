@@ -1,344 +1,278 @@
 <head>
-  <title>Conky</title>
-  <link rel="shortcut icon" href="./Fedora_Logo.png" type="image/png">
+  <title>Creating VLAN Interfaces</title>
+  <link rel="shortcut icon" href="./CentOS_Logo.png" type="image/png">
 </head>
+ <head>
+  <meta charset="utf-8">
+ </head>
 <style>
+.neonText1 {
+  color: #87CEFA;
+  text-shadow:
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1;
+}
+.neonText2 {
+  color: #00FF00;
+  text-shadow:
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400;
+}
+/* Additional styling */
 body{
-    background-image: url('Fon_Post.jpg');
+    background-color: black;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    max-width: 1000px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
-    color: #333;
+    color: #cfcfcf;
 }
 a {
     text-decoration: none;
 }
 p {
   text-indent: 1.5em;
-  text-align: justify;
-}
-h2 {
-  font-size: 19px;
-}
-</style>
-<style> 
-table{
-border: 1px black solid;
-}
-th, td {
-  border: 1px solid grey; /*  бахнуть на rgba(255,255,0,0); */
+  font-family: monospace;
+  font-weight: 500;
+  white-space: pre;
+  line-height: 2;
+  letter-spacing: 1px;
 }
 </style>
-<style>
-    button {
-    position: static;
-    border: 1px solid #808080;
-    font-size: 18px;
-    background-color: rgba(28,28,28,0);
-    transition: 0.5s;
-    }
-    button:hover {
-    background-color: #ff0000;
-    }
-</style>
- <br/>
-<Center>
-<img src="./Fedora_Logo.png" width="150" height="150"/>
-</Center><br/>
-<h1 align="Center" style="color:rgb(255, 255, 255)"><i>Conky</i></h1>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Всем привет! В данном посте рассматривается то, как настраивается и устанавливается программа для системного мониторинга Conky.</p></i>
-<h2><i style="color:rgb(255, 255, 255)"><p align="Left">1. Установка программы для системного мониторинга.</p></i></h2>
-<html>
-<body>
-<div align="Center">
-<table>
- <tbody>
-  <tr>
-   <td align="Left" style="color:#ff0000" width="200px"><b><i># yum install -y conky</i></b></td>
-   <td align="Left" style="color:#00ff15" width="800px"><b><i>Команда для установка пакета Conky.</i></b></td>
-  </tr>
- </tbody>
-</table>
-<h2><i style="color:rgb(255, 255, 255)"><p align="Left">2. Настройка программы для системного мониторинга.</p></i></h2>
-<table>
-  <tbody>
-  <tr>
-   <td align="Left" style="color:#ff0000" width="600px"><b><i># cp /etc/conky/conky.conf /etc/conky/conky.default</i></b></td>
-   <td align="Left" style="color:#00ff15" width="400px"><b><i>Скопируем файл conky.conf с дефолтными настройками Conky в тот же каталог, но с измененным именем conky.default.</i></b></td>
-  </tr>
-  <tr>
-   <td align="Left" style="color:#ff0000" width="300px"><b><i># nano /etc/conky/conky.conf</i></b></td>
-   <td align="Left" style="color:#00ff15" width="700px"><b><i>Открываем файл конфигурации conky.conf в текстовом редакторе nano и меняем конфиг на тот, что выложен ниже.</i></b></td>
-  </tr>
-  <tr>
-    <th style="color:#ff0000" colspan="2" align="Left">-- Conky, a system monitor https://github.com/brndnmtthws/conky<br/>
-      --<br/>
-      -- This configuration file is Lua code. You can write code in here, and it will<br/>
-      -- execute when Conky loads. You can use it to generate your own advanced<br/>
-      -- configurations.<br/>
-      --<br/>
-      -- Try this (remove the `--`):<br/>
-      --<br/>
-      --   print("Loading Conky config")<br/>
-      --<br/>
-      -- For more on Lua, see:<br/>
-      -- https://www.lua.org/pil/contents.html<br/>
-      <br/>
-      conky.config = {<br/>
-          alignment = 'bottom_right',<br/>
-          background = false,<br/>
-          border_width = 1,<br/>
-          cpu_avg_samples = 2,<br/>
-          default_color = 'white',<br/>
-          default_outline_color = 'white',<br/>
-          default_shade_color = 'white',<br/>
-          double_buffer = true,<br/>
-          draw_borders = false,<br/>
-          draw_graph_borders = true,<br/>
-          draw_outline = false,<br/>
-          draw_shades = false,<br/>
-          extra_newline = false,<br/>
-          font = 'DejaVu Sans Mono:size=9',<br/>
-          gap_x = 10,<br/>
-          gap_y = 10,<br/>
-          minimum_height = 5,<br/>
-          minimum_width = 5,<br/>
-          net_avg_samples = 2,<br/>
-          no_buffers = true,<br/>
-          out_to_console = false,<br/>
-          out_to_ncurses = false,<br/>
-          out_to_stderr = false,<br/>
-          out_to_x = true,<br/>
-          own_window = true,<br/>
-          own_window_class = 'Conky',<br/>
-          own_window_type = 'dock',<br/>
-          own_window_argb_visual = yes,<br/>
-          own_window_argb_value = 255,<br/>
-          own_window_argb_visual = true;<br/>
-          own_window_colour = '171717';<br/>
-          own_window_argb_value = 150;<br/>
-          show_graph_range = false,<br/>
-          show_graph_scale = false,<br/>
-          stippled_borders = 0,<br/>
-          update_interval = 0.1,<br/>
-          uppercase = false,<br/>
-          use_spacer = 'none',<br/>
-          use_xft = true,<br/>
-      }<br/>
-      <br/>
-      conky.text = [[<br/>
-      ${color white}Uptime:$color $uptime<br/>
-      CPU: ${acpitemp}°C<br/>
-      ${color white}Frequency (in MHz):$color $freq<br/>
-      ${color white}Frequency (in GHz):$color $freq_g<br/>
-      ${color white}RAM Usage:$color $mem/$memmax - $memperc% ${membar 4}<br/>
-      ${color white}Swap Usage:$color $swap/$swapmax - $swapperc% ${swapbar 4}<br/>
-      ${color white}CPU Usage:$color $cpu% ${cpubar 4}<br/>
-      ${color white}Processes:$color $processes  ${color grey}Running:$color $running_processes<br/>
-      $hr<br/>
-      ${color white}File systems:<br/>
-       / $color${fs_used /}/${fs_size /} ${fs_bar 6 /}<br/>
-      ${color white}Networking:<br/>
-      ${color white}IP адрес:$color ${addr VLAN3}<br/>
-      Up:$color ${upspeed} ${color white} - Down:$color ${downspeed}<br/>
-      ${color red}$hr<br/>
-      ${color red}Пользователи: $user_names<br/>
-      $hr<br/>
-      ${color white}Name              PID     CPU%   MEM%<br/>
-      ${color white} ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}<br/>
-      ${color white} ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}<br/>
-      ${color white} ${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}<br/>
-      ${color white} ${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}<br/>
-      ]]<br/>
-      <br/>
-      <a style="color:#00ff15">Ctrl + O > Enter |#|#| Сохраняем изменения в файле.</a><br/>
-      <a style="color:#00ff15">Ctrl + X |#|#| Выходим из текстового редактора nano.</a></th>
-   </tr>
-  </tbody>
-</table>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Пояснение к вышенаписанному конфигу Conky:</p></i>
-<table>
-  <tbody>
-  <tr>
-   <td align="Left" style="color:#ff0000" width="300px"><b><i>own_window_argb_visual = true,<br/>own_window_colour = '171717',<br/>own_window_argb_value = 150,</i></b></td>
-   <td align="Left" style="color:#00ff15" width="700px"><b><i>Строки отвечающие за прозрачность.</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="300px"><b><i>alignment = 'bottom_right',</i></b></td>
-    <td align="Left" style="color:#00ff15" width="700px"><b><i>Расположение виджета (справа внизу).</i></b></td>
-   </tr>
-   <tr>
-    <td align="Left" style="color:#ff0000" width="300px"><b><i>gap_x = 10,</i></b></td>
-    <td align="Left" style="color:#00ff15" width="700px"><b><i>Отступ от края по горизонтали.</i></b></td>
-   </tr>
-   <tr>
-    <td align="Left" style="color:#ff0000" width="300px"><b><i>gap_y = 10,</i></b></td>
-    <td align="Left" style="color:#00ff15" width="700px"><b><i>Отступ от края по вертикали.</i></b></td>
-   </tr>
-   <tr>
-    <td align="Left" style="color:#ff0000" width="300px"><b><i>font = 'DejaVu Sans Mono:size=9',</i></b></td>
-    <td align="Left" style="color:#00ff15" width="700px"><b><i>Настройка шрифта и размера.</i></b></td>
-   </tr>
-   <tr>
-    <td align="Left" style="color:#ff0000" width="300px"><b><i>update_interval = 0.1,</i></b></td>
-    <td align="Left" style="color:#00ff15" width="700px"><b><i>Интервал обновления данных (0.1 секунды).</i></b></td>
-   </tr>
-   <tr>
-    <td align="Left" style="color:#ff0000" width="300px"><b><i>double_buffer = true,</i></b></td>
-    <td align="Left" style="color:#00ff15" width="700px"><b><i>Включение двойной буферизации для того, чтобы виджет при обновлении не мерцал.</i></b></td>
-   </tr>
-  </tbody>
-</table>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Конфигурация текста, которая выводится в виджете(Конфигурация текста осталась почти без изменения, был поменян цвет текста и добавлена строка с открытыми на данный момент сессиями на используемом устройстве):</p></i>
-<table>
-  <tbody>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>${color white}Uptime:$color $uptime</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Время безотказной работы/Время с момента запуска устройства.</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>CPU: ${acpitemp}°C</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Температура процессора.</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>${color white}Frequency (in MHz):$color $freq</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Частота в MHz.</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>${color white}Frequency (in GHz):$color $freq_g</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Частота в GHz.</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>${color white}RAM Usage:$color $mem/$memmax - $memperc% ${membar 4}</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Сколько оперативной памяти используется на данный момент.</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>${color white}Swap Usage:$color $swap/$swapmax - $swapperc% ${swapbar 4}</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Сколько используется файлов подкачки на данный момент.</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>${color white}CPU Usage:$color $cpu% ${cpubar 4}</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Нагруженность ЦП на данный момент.</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>${color white}Processes:$color $processes  ${color grey}Running:$color $running_processes</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Запущенные процессы.</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>$hr</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Черта.</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>${color white}File systems:</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Текст: File systems(Файловые системы).</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i> / $color${fs_used /}/${fs_size /} ${fs_bar 6 /}</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Индикация файловой системы (сколько пространства занято/свободно).</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>${color white}Networking:</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Текст: Networking(Сеть).</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>${color white}IP адрес:$color ${addr VLAN3}</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>IP-адрес VLAN3(вместо "VLAN3" прописываете свой интерфейс).</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>Up:$color ${upspeed} ${color white} - Down:$color ${downspeed}</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Прием и отдача трафика.</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>$hr</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Черта.</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>${color red}Пользователи: $user_names</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Строка открытых сессий. Отображает пользователя, под которым выполнен вход в систему, также отображает ssh-соединения к нашему устройству.</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>$hr</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Черта.</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>${color white}Name              PID     CPU%   MEM%</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Столбцы с текстами:<br/> Name(Имя процесса),<br/> PID(Идентификатор процесса),<br/> CPU%(Нагруженность процессора),<br/> MEM%(Нагруженность оперативной памяти).</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>${color white} ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}<br/>${color white} ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}<br/>${color white} ${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}<br/>${color white} ${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Описание запущенных процессов.</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>/etc/conky/conky.conf</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Место расположения конфигурационного файла conky.conf</i></b></td>
-  </tr>
- </tbody>
-</table>
-<h2><i style="color:rgb(255, 255, 255)"><p align="Left">3. Настройка автозагрузки Conky.</p></i></h2>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Теперь нужно создать файл, который будет запускать программу Conky при запуске системы.</p></i>
-<table>
- <tbody>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>conky.desktop</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Название файла, которое нужно будет создать для автозапуска.</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i>/etc/xdg/autostart/conky.desktop</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Место расположения файла conky.desktop для автозапуска приложения Conky.</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i># nano /etc/xdg/autostart/conky.desktop</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Команда для создания и одновременного редактирования файла conky.desktop.</i></b></td>
-  </tr>
- </tbody>
-</table>
-<i style="color:rgb(255, 255, 255)"><p align="Left">В файле conky.desktop прописываем следующую конфигурацию:</p></i>
-<table>
- <tbody> 
- <tr>
-  <th style="color:#ff0000" colspan="2" align="Left">O[Desktop Entry]<br/>
-    Type=Application<br/>
-    Exec=conky<br/>
-    Hidden=false<br/>
-    X-MATE-Autostart-enabled=true<br/>
-    Name[ru_RU]=Conky<br/>
-    Name=Conky<br/>
-    Comment[ru_RU]=<br/>
-    Comment=<br/>
-    X-MATE-Autostart-Delay=30<br/>
-    <br/>
-    <a style="color:#00ff15">Ctrl + O > Enter |#|#| Сохраняем изменения в файле.<br/>
-    Ctrl + X |#|#| Выходим из текстового редактора nano.</a></th>
- </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="700px"><b><i># reboot</i></b></td>
-    <td align="Left" style="color:#00ff15" width="300px"><b><i>Команда для перезагрузки ОС.</i></b></td>
-  </tr>
-  <tr>
-    <th style="color:#00ff15" colspan="2" align="Left">Если после перезапуска системы виджет не появился, придется установить дополнительные пакеты из "Цетра приложений" Fedora.<br/>
-      Открываем "Центр приложений" и устанваливаем пакет: "Доп. настройки GNOME";<br/>
-      1) Открываем "Доп. настройки GNOME";<br/>
-      2) Выбираем вкладку "Автозапуск";<br/>
-      3) Нажимаем на "+";<br/>
-      4) Нажимаем на "Лупу" и ищем "Conky", нажимаем "Добавить";<br/>
-      5) Перезагружаем систему, логинимся и наслаждаемся результатом!)</th>
-  </tr>
- </tbody>
-</table>
-<h2 style="color:rgb(255, 255, 255)"><p align="Left"><i>4. Вопрос/Ответ.</i></p></h2>
-<table>
- <tbody>
-  <i style="color:rgb(255, 255, 255)"><p align="Left">Вопрос: Как проверить, что сонфигурация файла conky.conf написана без ошибок?</p></i>
-  <i style="color:rgb(255, 255, 255)"><p align="Left">Ответ: В терминале выполните команду: conky. Если виджет открылся, то все действия выполены успешно! Если же после ввода команды появилась ошибка, то проверьте синтаксис в конфигурационном файле.</p></i>
-  <i style="color:rgb(255, 255, 255)"><p align="Left">Вопрос: Как проверить автозагрузку виджета Conky при запуске системы?</p></i>
-  <i style="color:rgb(255, 255, 255)"><p align="Left">Ответ: В терминале выполните команду: reboot. После того, как вы залогинитесь, через 30 секунд должен появиться виджет.</p></i>
- </tbody>
-</table>
+<div class="container">
+<p class="neonText1">
+Установка/настройка программы для системного мониторинга - Conky на ОС Linux Fedora 36
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Все описанные ниже действия выполнялись под пользователем root
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Всем привет! Для реализации данного проекта мне потребовалось:
+
+1) Установить Conky;
+2) Настроить Conky;
+3) Добавить в автозагрузку Conky;
+4) Вопрос/Ответ.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+1) Установка Conky.
+------------
+<a class="neonText2">yum install -y conky</a> |#|#| Команда для установка пакета Conky.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2) Настройка Conky.
+------------
+<a class="neonText2">cp /etc/conky/conky.conf /etc/conky/conky.default</a> |#|#| Скопируем файл conky.conf с дефолтными настройками Conky в тот же каталог, но с измененным именем conky.default.
+------------
+nano /etc/conky/conky.conf |#|#| Открываем файл конфигурации conky.conf в текстовом редакторе nano и меняем конфиг на тот, что выложен ниже:
+<a class="neonText2">
+-- Conky, a system monitor https://github.com/brndnmtthws/conky
+--
+-- This configuration file is Lua code. You can write code in here, and it will
+-- execute when Conky loads. You can use it to generate your own advanced
+-- configurations.
+--
+-- Try this (remove the `--`):
+--
+--   print("Loading Conky config")
+--
+-- For more on Lua, see:
+-- https://www.lua.org/pil/contents.html
+
+conky.config = {
+    alignment = 'bottom_right',
+    background = false,
+    border_width = 1,
+    cpu_avg_samples = 2,
+    default_color = 'white',
+    default_outline_color = 'white',
+    default_shade_color = 'white',
+    double_buffer = true,
+    draw_borders = false,
+    draw_graph_borders = true,
+    draw_outline = false,
+    draw_shades = false,
+    extra_newline = false,
+    font = 'DejaVu Sans Mono:size=9',
+    gap_x = 10,
+    gap_y = 10,
+    minimum_height = 5,
+    minimum_width = 5,
+    net_avg_samples = 2,
+    no_buffers = true,
+    out_to_console = false,
+    out_to_ncurses = false,
+    out_to_stderr = false,
+    out_to_x = true,
+    own_window = true,
+    own_window_class = 'Conky',
+    own_window_type = 'dock',
+    own_window_argb_visual = yes,
+    own_window_argb_value = 255,
+    own_window_argb_visual = true;
+    own_window_colour = '171717';
+    own_window_argb_value = 150;
+    show_graph_range = false,
+    show_graph_scale = false,
+    stippled_borders = 0,
+    update_interval = 0.1,
+    uppercase = false,
+    use_spacer = 'none',
+    use_xft = true,
+}
+
+conky.text = [[
+${color white}Uptime:$color $uptime
+CPU: ${acpitemp}°C
+${color white}Frequency (in MHz):$color $freq
+${color white}Frequency (in GHz):$color $freq_g
+${color white}RAM Usage:$color $mem/$memmax - $memperc% ${membar 4}
+${color white}Swap Usage:$color $swap/$swapmax - $swapperc% ${swapbar 4}
+${color white}CPU Usage:$color $cpu% ${cpubar 4}
+${color white}Processes:$color $processes  ${color grey}Running:$color $running_processes
+$hr
+${color white}File systems:
+ / $color${fs_used /}/${fs_size /} ${fs_bar 6 /}
+${color white}Networking:
+${color white}IP адрес:$color ${addr VLAN3}
+Up:$color ${upspeed} ${color white} - Down:$color ${downspeed}
+${color red}$hr
+${color red}Пользователи: $user_names
+$hr
+${color white}Name              PID     CPU%   MEM%
+${color white} ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
+${color white} ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
+${color white} ${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
+${color white} ${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}
+]]</a>
+------------
+Ctrl + O > Enter |#|#| Сохраняем изменения в файле.
+Ctrl + X |#|#| Выходим из текстового редактора nano.
+------------
+Пояснение к вышенаписанному конфигу Conky:
+------------
+Строки отвечающие за прозрачность:
+|#|#|
+own_window_argb_visual = true,
+own_window_colour = '171717',
+own_window_argb_value = 150,
+|#|#|
+------------
+alignment = 'bottom_right', |#|#| Расположение виджета (справа внизу).
+------------
+gap_x = 10, |#|#| Отступ от края по горизонтали.
+gap_y = 10, |#|#| Отступ от края по вертикали.
+------------
+font = 'DejaVu Sans Mono:size=9', |#|#| Настройка шрифта и размера.
+------------
+update_interval = 0.1, |#|#| Интервал обновления данных (0.1 секунды).
+------------
+double_buffer = true, |#|#| Включчение двойной буферизации для того, чтобы виджет при обновлении не мерцал.
+------------
+Конфигурация текста, которая выводится в виджете:
+------------
+Конфигурация текста осталась почти без изменения, был поменян цвет текста и добавлена строка с открытыми на данный момент сессиями на данном устройстве.
+
+${color white}Uptime:$color $uptime |#|#| Время безотказной работы/Время с момента запуска устройства.
+
+CPU: ${acpitemp}°C |#|#| Температура процессора.
+
+${color white}Frequency (in MHz):$color $freq |#|#| Частота в MHz.
+
+${color white}Frequency (in GHz):$color $freq_g |#|#| Частота в GHz.
+
+${color white}RAM Usage:$color $mem/$memmax - $memperc% ${membar 4} |#|#| Сколько оперативной памяти используется на данный момент.
+
+${color white}Swap Usage:$color $swap/$swapmax - $swapperc% ${swapbar 4} |#|#| Сколько используется файлов подкачки на данный момент.
+
+${color white}CPU Usage:$color $cpu% ${cpubar 4} |#|#| Нагруженность ЦП на данный момент.
+
+${color white}Processes:$color $processes  ${color grey}Running:$color $running_processes |#|#| Запущенные процессы.
+
+$hr |#|#| Черта.
+
+${color white}File systems: |#|#| Текст: File systems(Файловые системы).
+
+ / $color${fs_used /}/${fs_size /} ${fs_bar 6 /} |#|#| Индикация файловой системы (сколько пространства занято/свободно).
+ 
+ ${color white}Networking: |#|#| Текст: Networking(Сеть).
+ 
+ ${color white}IP адрес:$color ${addr VLAN3} |#|#| IP-адрес VLAN3(вместо "VLAN3" прописываете свой интерфейс).
+ 
+ Up:$color ${upspeed} ${color white} - Down:$color ${downspeed} |#|#| Прием и отдача трафика.
+ 
+ $hr |#|#| Черта.
+ 
+ ${color red}Пользователи: $user_names |#|#| Строка открытых сессий. Отображает пользователя, под которым выполнен вход в систему, также отображает ssh-соединения к нашему устройству.
+
+$hr |#|#| Черта.
+
+${color white}Name              PID     CPU%   MEM% |#|#| Столбцы с текстами: Name(Имя процесса), PID(Идентификатор процесса), CPU%(Нагруженность процессора), MEM%(Нагруженность оперативной памяти).
+
+Описание запущенных процессов:
+|#|#|
+${color white} ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
+${color white} ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
+${color white} ${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
+${color white} ${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}
+|#|#|
+------------
+/etc/conky/conky.conf |#|#| Место расположения конфигурационного файла conky.conf
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+3) Добавление в автозагрузку Conky.
+------------
+Теперь нужно создать файл, который будет запускать программу Conky при запуске системы.
+------------
+conky.desktop |#|#| Название файла, которое нужно будет создать для автозапуска.
+------------
+/etc/xdg/autostart/conky.desktop |#|#| Место расположения файла conky.desktop для автозапуска приложения Conky.
+------------
+<a class="neonText2">nano /etc/xdg/autostart/conky.desktop</a> |#|#| Команда для создания и одновременного редактирования файла conky.desktop.
+------------
+В файле conky.desktop прописываем следующую конфигурацию:
+<a class="neonText2">
+O[Desktop Entry]
+Type=Application
+Exec=conky
+Hidden=false
+X-MATE-Autostart-enabled=true
+Name[ru_RU]=Conky
+Name=Conky
+Comment[ru_RU]=
+Comment=
+X-MATE-Autostart-Delay=30</a>
+------------
+Ctrl + O > Enter |#|#| Сохраняем изменения в файле.
+Ctrl + X |#|#| Выходим из текстового редактора nano.
+------------
+<a class="neonText2">reboot</a> |#|#| Команда для перезагрузки АРМ/ВМ
+------------
+Если после перезапуска системы виджет не появился, придется установить дополнительные пакеты из "Цетра приложений" Fedora.
+Открываем "Центр приложений" и устанваливаем пакет: "Доп. настройки GNOME".
+Открываем "Доп. настройки GNOME".
+Выбираем вкладку "Автозапуск".
+Нажимаем на "+".
+Нажимаем на "Лупу" и ищем "Conky", нажимаем "Добавить".
+Перезагружаем систему, логинимся и наслаждаемся результатом!)
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+4) Вопрос/Ответ
+------------
+Вопрос: Как проверить, что сонфигурация файла conky.conf написана без ошибок?
+Ответ: В терминале выполните команду: conky. Если виджет открылся, то все действия выполены успешно! Если же после ввода команды появилась ошибка, то проверьте синтаксис в конфигурационном файле.
+------------
+Вопрос: Как проверить автозагрузку виджета Conky при запуске системы?
+Ответ: В терминале выполните команду: reboot. После того, как вы залогинитесь, через 30 секунд должен появиться виджет.  
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+На этом инструкция завершена! Спасибо за внимание!
+</p>
 </div>
-</body>
-</html>
- <br/>
-<button><i><a href="https://dimoroz772.github.io/Linux_Fedora/" style="color:#F0F8FF"><b>Back</b></a><br/><i/></button>
