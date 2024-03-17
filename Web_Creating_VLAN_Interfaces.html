@@ -1,92 +1,88 @@
 <head>
-    <title>Creating VLAN Interfaces</title>
-    <link rel="shortcut icon" href="./Fedora_Logo.png" type="image/png">
-  </head>
-  <style>
-  body{
-      background-image: url('Fon_Post.jpg');
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-attachment: fixed;
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 20px;
-      color: #333;
-  }
-  a {
-      text-decoration: none;
-  }
-  p {
-    text-indent: 1.5em;
-    text-align: justify;
-  }
-  </style>
-  <style> 
-  table{
-  border: 1px black solid;
-  }
-  th, td {
-    border: 1px solid grey; /*  бахнуть на rgba(255,255,0,0); */
-  }
-  </style>
-  <style>
-      button {
-      position: static;
-      border: 1px solid #808080;
-      font-size: 18px;
-      background-color: rgba(28,28,28,0);
-      transition: 0.5s;
-      }
-      button:hover {
-      background-color: #ff0000;
-      }
-  </style>
-   <br/>
-  <Center>
-  <img src="./Fedora_Logo.png" width="150" height="150"/>
-  </Center><br/>
-  <h1 align="Center" style="color:rgb(255, 255, 255)"><i>Creating VLAN Interfaces</i></h1>
-  <i style="color:rgb(255, 255, 255)"><p align="Left">Всем привет! В данном посте рассматривается то, как настраивается VLAN на сетевом интерфейсе. Изначально смотрим как называется сетевой интерфейс.</p></i>
-  <html>
-  <body>
-  <div align="Center">
-  <table>
-   <tbody>
-    <tr>
-     <td align="Center" style="color:#ff0000" width="50px"><b><i># ip a</i></b></td>
-     <td align="Center" style="color:#00ff15" width="950px"><b><i>Просмотр всех IP-адресов, связанных с сетевыми интерфейсами.</i></b></td>
-    </tr>
-   </tbody>
-  </table>
-    <p style="color:rgb(255, 255, 255)"><i>В моём случае будет использоваться сетевой интерфейс <a style="color:#ff0000">enp1s0</a>.</i></p>
-  <table>
-   <tbody>  
-    <tr>
-     <td align="Left" style="color:#ff0000" width="500px"><b><i># nmcli con add type vlan con-name enp1s0.1 ifname VLAN1 id 1 dev enp1s0 ip4 10.10.10.10/24</i></b></td>
-     <td align="Left" style="color:#00ff15" width="500px"><b><i>Данной командой создается VLAN #1, с IP-адресом 10.10.10.10 с 24 маской.</i></b></td>
-    </tr>
-   </tbody>
-  </table>
-    <p style="color:rgb(255, 255, 255)"><i></a>Если VLAN #1 будет использоваться как основной сетевой интерфейс, то нужно отключить проводное соединение, дополнить VLAN-интерфейс и перезагрузить его:</i></p>
-  <table>
-   <tbody>
-    <tr>
-     <td align="Left" style="color:#ff0000" width="700px"><b><i>1.В консоли вводим команду nmtui;<br/>2.Изменить подключение;<br/>3.Во вкладке VLAN выбираем enp1s0.1;<br/>4.Далее заполняем строки: Шлюз, Серверы DNS, Домены по необходимости;<br/>5.ОК;<br/>6.Назад;<br/>7.Активировать подключение;<br/>8.Проводное соединение > Отключить;<br/>9.VLAN (VLAN1) > Отключить > Включить;<br/>10.Назад;<br/>11.Выйти > OK.</i></b></td>
-     <td align="Center" style="color:#00ff15" width="300px"><b><i>Порядок выполнения команд.</i></b></td>
-    </tr>
-    </tbody>
-  </table>
-  <p style="color:rgb(255, 255, 255)"><i></a>Также нужно отключить автоматическое подключение проводного соединения.</i></p>
-  <table>
-   <tbody>
-    <tr>
-     <td align="Left" style="color:#ff0000" width="200px"><b><i># nmcli device status</i></b></td>
-     <td align="Center" style="color:#00ff15" width="800px"><b><i>Проверка активности всех сетевых интерфейсов.</i></b></td>
-    </tr>
-   </tbody>
-  </table>
-  </div>
-  </body>
-  </html>
-   <br/>
-  <button><i><a href="https://dimoroz772.github.io/Linux_Fedora/" style="color:#F0F8FF"><b>Back</b></a><br/><i/></button>
+  <title>Creating VLAN Interfaces</title>
+  <link rel="shortcut icon" href="./CentOS_Logo.png" type="image/png">
+</head>
+ <head>
+  <meta charset="utf-8">
+ </head>
+<style>
+.neonText1 {
+  color: #87CEFA;
+  text-shadow:
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1;
+}
+.neonText2 {
+  color: #00FF00;
+  text-shadow:
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400;
+}
+/* Additional styling */
+body{
+    background-color: black;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #cfcfcf;
+}
+a {
+    text-decoration: none;
+}
+p {
+  text-indent: 1.5em;
+  font-family: monospace;
+  font-weight: 500;
+  white-space: pre;
+  line-height: 2;
+  letter-spacing: 1px;
+}
+</style>
+<div class="container">
+<p class="neonText1">
+Создание/настройка VLAN-ов на OC Linux Fedora 36
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Изначально смотрим как называется сетевой интерфейс.
+------------
+<a class="neonText2">ip a</a> |#|#| Просмотр всех IP-адресов, связанных с сетевыми интерфейсами.
+------------
+В моём случае будет использоваться сетевой интерфейс enp1s0.
+------------
+<a class="neonText2">nmcli con add type vlan con-name enp1s0.1 ifname VLAN1 id 1 dev enp1s0 ip4 10.10.10.10/24</a> |#|#| Данной командой создается VLAN #1, с IP-адресом 10.10.10.10 с 24 маской
+------------
+Если VLAN #1 будет использоваться как основной сетевой интерфейс, то нужно отключить проводное соединение, дополнить VLAN-интерфейс и перезагрузить его:
+
+1.В консоли вводим команду mntui
+2.Изменить подключение
+3.Во вкладке VLAN выбираем enp1s0.1
+4.Далее заполняем строки: Шлюз, Серверы DNS, Домены по необходимости.
+5.ОК
+6.Назад
+7.Активировать подключение
+8.Проводное соединение > Отключить
+9.VLAN (VLAN1) > Отключить > Включить
+10.Назад
+11.Выйти > Ok
+------------
+Также нужно отключить автоматическое подключение проводного соединения.
+------------
+<a class="neonText2">nmcli device status</a> |#|#| Проверка активности всех сетевых интерфейсов.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+На этом гайд завершён. Спасибо за внимание!
+</p>
+</div>
