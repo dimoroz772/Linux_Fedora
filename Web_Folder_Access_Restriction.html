@@ -1,117 +1,103 @@
 <head>
   <title>Folder Access Restriction</title>
-  <link rel="shortcut icon" href="./Fedora_Logo.png" type="image/png">
+  <link rel="shortcut icon" href="./CentOS_Logo.png" type="image/png">
 </head>
+ <head>
+  <meta charset="utf-8">
+ </head>
 <style>
+.neonText1 {
+  color: #87CEFA;
+  text-shadow:
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1;
+}
+.neonText2 {
+  color: #00FF00;
+  text-shadow:
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400;
+}
+/* Additional styling */
 body{
-    background-image: url('Fon_Post.jpg');
+    background-color: black;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    max-width: 1000px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
-    color: #333;
+    color: #cfcfcf;
 }
 a {
     text-decoration: none;
 }
 p {
   text-indent: 1.5em;
-  text-align: justify;
-}
-h2 {
-  font-size: 19px;
-}
-</style>
-<style> 
-table{
-border: 1px black solid;
-}
-th, td {
-  border: 1px solid grey; /*  бахнуть на rgba(255,255,0,0); */
+  font-family: monospace;
+  font-weight: 500;
+  white-space: pre;
+  line-height: 2;
+  letter-spacing: 1px;
 }
 </style>
-<style>
-    button {
-    position: static;
-    border: 1px solid #808080;
-    font-size: 18px;
-    background-color: rgba(28,28,28,0);
-    transition: 0.5s;
-    }
-    button:hover {
-    background-color: #ff0000;
-    }
-</style>
- <br/>
-<Center>
-<img src="./Fedora_Logo.png" width="150" height="150"/>
-</Center><br/>
-<h1 align="Center" style="color:rgb(255, 255, 255)"><i>Folder Access Restriction</i></h1>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Всем привет! В данном посте рассматривается то, как настроить ограничение доступа для пользователей к определенной папке.</p></i>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Заходим в командную строку.</p></i>
-<html>
-<body>
-<div align="Center">
-<table>
- <tbody>
-  <tr>
-   <td align="Left" style="color:#ff0000" width="400px"><b><i># su</i></b></td>
-   <td align="Left" style="color:#00ff15" width="600px"><b><i>Выполните команду su и введите пароль от root пользователя.</i></b></td>
-  </tr>
-  <tr>
-   <td align="Left" style="color:#ff0000" width="400px"><b><i># cd /home/user/Documents/</i></b></td>
-   <td align="Left" style="color:#00ff15" width="600px"><b><i>Переходим в нужный каталог, в котором будет создаваться папка с ограниченным доступом. В каталоге вместо "user" выберите имя своего пользователя, под которым выполняется авторизация.</i></b></td>
-  </tr>
-  <tr>
-   <td align="Left" style="color:#ff0000" width="400px"><b><i># mkdir /home/user/Documents/Test/</i></b></td>
-   <td align="Left" style="color:#00ff15" width="600px"><b><i>Создание папки Test.</i></b></td>
-  </tr>
- </tbody>
-</table>
-<i style="color:rgb(255, 255, 255)"><p align="Left">По желанию можно добавлять пользователей в группы:</p></i>
-<table>
-  <tbody>
-  <tr>
-   <td align="Left" style="color:#ff0000" width="400px"><b><i># usermod -a -G wheel user</i></b></td>
-   <td align="Left" style="color:#00ff15" width="600px"><b><i>Добавление пользователя "user" в группу "wheel".</i></b></td>
-  </tr>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="400px"><b><i># usermod -a -G root user</i></b></td>
-    <td align="Left" style="color:#00ff15" width="600px"><b><i>Добавление пользователя "user" в группу "root".</i></b></td>
-   </tr>
-   <tr>
-    <td align="Left" style="color:#ff0000" width="400px"><b><i># id -Gn user</i></b></td>
-    <td align="Left" style="color:#00ff15" width="600px"><b><i>Команда для проверки в каких папках состоит пользователь "user".</i></b></td>
-   </tr>
-   <tr>
-    <td align="Left" style="color:#ff0000" width="400px"><b><i># chmod 700 /home/user/Documents/Test/</i></b></td>
-    <td align="Left" style="color:#00ff15" width="600px"><b><i>Данной командой выдаются права:</i></b></td>
-   </tr>
-   <th style="color:#ff0000" colspan="2" align="Left">7 - Разрешить всё для владельца(root)<br/>0 - Для участников группы(root) никаких прав<br/>0 - Для всех остальных пользователей и групп тоже никаких прав<br/></th>
-  </tbody>
-</table>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Так как папка "Test" создавалась то пользователя "root", то и владельцем данной папки является пользователь "root".</p></i>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Чтобы посмотреть права, группу и владельца папки "Test", нужно выполнить команду "ls -sl" находясь в каталоге /home/user/Documents/</p></i>
-<table>
-  <tbody>
-   <tr>
-    <td align="Left" style="color:#ff0000" width="130px"><b><i># cd..</i></b></td>
-    <td align="Left" style="color:#00ff15" width="870px"><b><i>Команда для того, чтобы вернуться назад из каталога /home/user/Documents/Test/ в каталог /home/user/Documents/</i></b></td>
-   </tr>
-   <tr>
-    <td align="Left" style="color:#ff0000" width="130px"><b><i># ls -sl</i></b></td>
-    <td align="Left" style="color:#00ff15" width="870px"><b><i>Команда для просмотра прав и владельцев каталога и файлов лежащих в нём.</i></b></td>
-   </tr>
-  </tbody>
-</table>
-<i style="color:rgb(255, 255, 255)"><p align="Left">После выполнения данной команды должен быть такой вывод: <b style="color:#ff0000">4 d-w-------. 3 root     root 4096 июл 13 17:26 Test</b></p></i>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Сначала прописывается владелец файла/каталога<b style="color:#ff0000">(root)</b>, потом группа<b style="color:#ff0000">(root)</b>.</p></i>
-<i style="color:rgb(255, 255, 255)"><p align="Left">После выполненных действий можно закрыть командную строку и попробовать зайти в папку в графическом интерфейсе. Если все было выполнено правильно, то под пользователем "user" в папку "Test" можно будет зайти только введя пароль пользователя "root". Также нельзя будет открыть какой-либо документ без ввода пароля от пользователя "root".</p></i>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Если попытаться зайти в папку в консоли под обычным пользователем, то обязательно появится ошибка: bash: cd: /home/user/Documents/Test/: Отказано в доступе.</p></i>
+<div class="container">
+<p class="neonText1">
+Ограничение доступа к папке на ОС Linux Fedora
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Заходим в командную строку.
+------------
+<a class="neonText2">Выполните команду "su" и введите пароль от root пользователя</a> |#|#| Команда su позволяет пользователю выполнять команды от имени другого пользователя(в нашем случае от пользователя root),
+не завершая текущий сеанс.
+------------
+<a class="neonText2">cd /home/user/Documents/</a> |#|#| Переходим в нужный каталог, в котором будет создаваться папка с ограниченным доступом. В каталоге вместо "user" выберите имя своего пользователя, под которым
+выполняется авторизация.
+------------
+<a class="neonText2">mkdir /home/user/Documents/Test/</a> |#|#| Создание папки Test.
+------------
+По желанию можно добавлять пользователей в группы.
+------------
+<a class="neonText2">usermod -a -G wheel user</a> |#|#| Добавление пользователя "user" в группу "wheel".
+------------
+<a class="neonText2">usermod -a -G root user</a> |#|#| Добавление пользователя "user" в группу "root".
+------------
+<a class="neonText2">id -Gn user</a> |#|#| Команда для проверки в каких папках состоит пользователь "user".
+------------
+<a class="neonText2">chmod 700 /home/user/Documents/Test/</a> |#|#| Данной командой выдаются права:
+              <a class="neonText2">7</a>                                         <a class="neonText2">0</a>                                                     <a class="neonText2">0</a>
+            /   \                                     /   \                                                 /   \
+Разрешить все для владельца(root)    Для участников группы(root) никаких прав     Для всех остальных пользователей и групп тоже никаких прав
+------------
+Так как папка "Test" создавалась от пользователя "root", то и владельцем данной папки является пользователь "root".
+------------
+Чтобы посмотреть права, группу и владельца папки "Test", нужно выполнить команду "ls -sl" находясь в каталоге /home/user/Documents/
+------------
+<a class="neonText2">cd ..</a> |#|#| Команда для того, чтобы вернуться назад из каталога /home/user/Documents/Test/ в каталог /home/user/Documents/
+------------
+<a class="neonText2">ls -sl</a> |#|#| Команда для просмотра прав и владельцев каталога и файлов лежащих в нём.
+------------
+После выполнения данной команды должен быть такой вывод: 4 d-w-------. 3 root     root 4096 июл 13 17:26 Test
+                                                                           |        |
+                                                                       <a class="neonText2">Владелец   Группа</a>
+------------
+После выполненных действий можно закрыть командную строку и попробовать зайти в папку в графическом интерфейсе. Если все было выполнено правильно, то под пользователем "user" в папку
+"Test" можно будет зайти только введя пароль пользователя "root". Также нельзя будет открыть какой-либо документ без ввода пароля от пользователя "root".
+Если попытаться зайти в папку в консоли под обычным пользователем, то обязательно появится ошибка:
+
+bash: cd: /home/user/Documents/Test/: Отказано в доступе.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+На этом инструкция закончена! Спасибо за внимание!
+</p>
 </div>
-</body>
-</html>
- <br/>
-<button><i><a href="https://dimoroz772.github.io/Linux_Fedora/" style="color:#F0F8FF"><b>Back</b></a><br/><i/></button>
