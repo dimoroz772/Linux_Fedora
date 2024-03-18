@@ -14,9 +14,9 @@ git clone -b release https://github.com/netbox-community/netbox-docker.git |#|#|
 ------------
 cd netbox-docker |#|#| Команда для перехода в каталог "netbox-docker"
 ------------
-nano docker-compose.yml |#|#| Команда для редактирования конфигурационного файла "docker-compose.yml"
+nano docker-compose.override.yml |#|#| Команда для редактирования конфигурационного файла "docker-compose.yml"
 ------------
-Приведите конфигурационный файл "docker-compose.yml" к следующему виду и сохраните перед закрытием:
+Приведите конфигурационный файл "docker-compose.override.yml" к следующему виду и сохраните перед закрытием:
 
 version: '3.4'
 services:
