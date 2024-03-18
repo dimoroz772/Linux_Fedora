@@ -1,84 +1,118 @@
 <head>
   <title>System information</title>
-  <link rel="shortcut icon" href="./Fedora_Logo.png" type="image/png">
+  <link rel="shortcut icon" href="./CentOS_Logo.png" type="image/png">
 </head>
+ <head>
+  <meta charset="utf-8">
+ </head>
 <style>
+.neonText1 {
+  color: #87CEFA;
+  text-shadow:
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1;
+}
+.neonText2 {
+  color: #00FF00;
+  text-shadow:
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400;
+}
+/* Additional styling */
 body{
-    background-image: url('Fon_Post.jpg');
+    background-color: black;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    max-width: 1000px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
-    color: #333;
+    color: #cfcfcf;
 }
 a {
     text-decoration: none;
 }
 p {
   text-indent: 1.5em;
-  text-align: justify;
-}
-h2 {
-  font-size: 19px;
-}
-</style>
-<style> 
-table{
-border: 1px black solid;
-}
-th, td {
-  border: 1px solid grey; /*  бахнуть на rgba(255,255,0,0); */
+  font-family: monospace;
+  font-weight: 500;
+  white-space: pre;
+  line-height: 2;
+  letter-spacing: 1px;
 }
 </style>
-<style>
-    button {
-    position: static;
-    border: 1px solid #808080;
-    font-size: 18px;
-    background-color: rgba(28,28,28,0);
-    transition: 0.5s;
-    }
-    button:hover {
-    background-color: #ff0000;
-    }
-</style>
- <br/>
-<Center>
-<img src="./Fedora_Logo.png" width="150" height="150"/>
-</Center><br/>
-<h1 align="Center" style="color:rgb(255, 255, 255)"><i>System information</i></h1>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Всем привет! В данном посте рассматривается то, каким образом можно посмотреть информацию о системе и ПК.</p></i>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Заходим в командную строку и вводим одну из следующих команд:</p></i>
-<html>
-<body>
-<div align="Center">
-<table>
- <tbody>
-  <tr>
-    <th style="color:#ff0000" colspan="2" align="Left" width="1000px"># neofetch</th>>
-  </tr>
-  </tbody>
-</table>
-<i style="color:rgb(255, 255, 255)"><p align="Left">После выполнения команды <b style="color:#ff0000">"neofetch"</b> получим следующий вывод:</p></i>
-<Center>
-  <img src="./neofetch.png" width="750" height="350"/>
-</Center><br/>
-<table>
-  <tbody>
-    <tr>
-      <th style="color:#ff0000" colspan="2" align="Left" width="1000px"># screenfetch</th>>
-    </tr>
-  </tbody>
-</table>
-<i style="color:rgb(255, 255, 255)"><p align="Left">После выполнения команды <b style="color:#ff0000">"screenfetch"</b> получим следующий вывод:</p></i>
-<Center>
-  <img src="./screenfetch.png" width="750" height="350"/>
-</Center><br/>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Решайте сами, что вам больше всего подходит для использования в практике)</p></i>
+<div class="container">
+<p class="neonText1">
+Как посмотреть информацию о системе и ПК?
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Заходим в командную строку и вводим команду: screenfetch
+------------
+Если такой команды нет, то система придложит установить необходимые пакеты
+------------
+Заходим в командную строку и вводим команду: neofetch
+------------
+Если такой команды нет, то система придложит установить необходимые пакеты
+------------
+Примеры вывода команд:
+
+[root@pc dmitriy]# <a class="neonText2">neofetch</a>
+
+             .',;::::;,'.                dmitriy@pc 
+         .';:cccccccccccc:;,.            ------------- 
+      .;cccccccccccccccccccccc;.         OS: Fedora Linux 36 (Workstation Edition) x86_64 
+    .:cccccccccccccccccccccccccc:.       Host: HP ProBook 455 G8 Notebook PC 
+  .;ccccccccccccc;.:dddl:.;ccccccc;.     Kernel: 5.18.11-200.fc36.x86_64 
+ .:ccccccccccccc;OWMKOOXMWd;ccccccc:.    Uptime: 2 hours, 19 mins 
+.:ccccccccccccc;KMMc;cc;xMMc:ccccccc:.   Packages: 1999 (rpm), 2 (flatpak), 15 (snap) 
+,cccccccccccccc;MMM.;cc;;WW::cccccccc,   Shell: bash 5.1.16 
+:cccccccccccccc;MMM.;cccccccccccccccc:   Resolution: 1920x1080 
+:ccccccc;oxOOOo;MMM0OOk.;cccccccccccc:   DE: GNOME 42.3.1 
+cccccc:0MMKxdd:;MMMkddc.;cccccccccccc;   WM: Mutter 
+ccccc:XM0';cccc;MMM.;cccccccccccccccc'   WM Theme: Adwaita 
+ccccc;MMo;ccccc;MMW.;ccccccccccccccc;    Theme: Adwaita [GTK2/3] 
+ccccc;0MNc.ccc.xMMd:ccccccccccccccc;     Icons: Adwaita [GTK2/3] 
+cccccc;dNMWXXXWM0::cccccccccccccc:,      Terminal: gnome-terminal 
+cccccccc;.:odl:.;cccccccccccccc:,.       CPU: AMD Ryzen 7 5800U with Radeon Graphics (16) @ 4.507GHz 
+:cccccccccccccccccccccccccccc:'.         GPU: AMD ATI 05:00.0 Cezanne 
+.:cccccccccccccccccccccc:;,..            Memory: 4221MiB / 7140MiB 
+  '::cccccccccccccc::;,.
+                                                                 
+                                                                 
+
+
+[root@pc dmitriy]# <a class="neonText2">screenfetch</a>
+
+           /:-------------:\          dmitriy@pc
+        :-------------------::        OS: Fedora 
+      :-----------/shhOHbmp---:\      Kernel: x86_64 Linux 5.18.11-200.fc36.x86_64
+    /-----------omMMMNNNMMD  ---:     Uptime: 2h 19m
+   :-----------sMMMMNMNMP.    ---:    Packages: 2013
+  :-----------:MMMdP-------    ---\   Shell: bash
+ ,------------:MMMd--------    ---:   Resolution: 3840x1080
+ :------------:MMMd-------    .---:   DE: GNOME 42.3
+ :----    oNMMMMMMMMMNho     .----:   WM: Mutter
+ :--     .+shhhMMMmhhy++   .------/   WM Theme: Adwaita
+ :-    -------:MMMd--------------:    GTK Theme: Adwaita [GTK2/3]
+ :-   --------/MMMd-------------;     Icon Theme: Adwaita
+ :-    ------/hMMMy------------:      Font: Cantarell 11
+ :-- :dMNdhhdNMMNo------------;       Disk: 23G / 70G (34%)
+ :---:sdNMMMMNds:------------:        CPU: AMD Ryzen 7 5800U with Radeon Graphics @ 16x 4.507GHz
+ :------:://:-------------::          GPU: AMD RENOIR (LLVM 14.0.0, DRM 3.46, 5.18.11-200.fc36.x86_64)
+ :---------------------://            RAM: 4497MiB / 7140MiB
+ 
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Решайте сами, что вам больше всего подходит для использования в практике)
+</p>
 </div>
-</body>
-</html>
- <br/>
-<button><i><a href="https://dimoroz772.github.io/Linux_Fedora/" style="color:#F0F8FF"><b>Back</b></a><br/><i/></button>
