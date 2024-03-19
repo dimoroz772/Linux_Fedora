@@ -2,110 +2,93 @@
   <title>Remote desktop in linux Fedora</title>
   <link rel="shortcut icon" href="./Fedora_Logo.png" type="image/png">
 </head>
+ <head>
+  <meta charset="utf-8">
+ </head>
 <style>
+.neonText1 {
+  color: #87CEFA;
+  text-shadow:
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1;
+}
+.neonText2 {
+  color: #00FF00;
+  text-shadow:
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400;
+}
+/* Additional styling */
 body{
-    background-image: url('Fon_Post.jpg');
+    background-color: black;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    max-width: 1000px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
-    color: #333;
+    color: #cfcfcf;
 }
 a {
     text-decoration: none;
 }
 p {
   text-indent: 1.5em;
-  text-align: justify;
-}
-h2 {
-  font-size: 18px;
-}
-</style>
-<style> 
-table{
-border: 1px black solid;
-}
-th, td {
-  border: 1px solid grey; /*  бахнуть на rgba(255,255,0,0); */
+  font-family: monospace;
+  font-weight: 500;
+  white-space: pre;
+  line-height: 2;
+  letter-spacing: 1px;
 }
 </style>
-<style>
-    button {
-    position: static;
-    border: 1px solid #808080;
-    font-size: 18px;
-    background-color: rgba(28,28,28,0);
-    transition: 0.5s;
-    }
-    button:hover {
-    background-color: #ff0000;
-    }
-</style>
- <br/>
-<Center>
-<img src="./Fedora_Logo.png" width="150" height="150"/>
-</Center><br/>
-<h1 align="Center" style="color:rgb(255, 255, 255)"><i>Remote desktop in linux Fedora</i></h1>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Всем привет! В данном посте рассматривается конссольное ПО для подключения к удалённым рабочим столам.</p></i>
-<br/>
-<Center>
-<h2><i style="color:rgb(255, 255, 255)">Нижеописанное ПО рассматривалось на OC Linux Fedora 36 Workstation</i></h2>
-<h2><i style="color:rgb(255, 255, 255)">Все описанные ниже действия выполнялись под пользователем root</i></h2>
-</Center>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Решил написать пост о том, что на Linux Fedora Worktation 36 можно установить пакет <i style="color:#ff0000" width="400px">rdesktop</i>, с помощью которого можно подключиться по
-  протоколу rdp к Windows Server.</p></i>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Конечно, в Linux Fedora есть и другие клиенты для соединения с удалёнными рабочими столами: <i style="color:#ff0000" width="400px">Remmina</i>, <i style="color:#ff0000" width="400px">x11vnc</i>, <i style="color:#ff0000" width="400px">TigerVNC</i>... Данный список можно долго 
-  перечислять, но далеко не все могут без проблем организовать удаленное соединение без ошибок и с качественной картинкой. Могу сказать лишь от себя, что
-  rdesktop подходит тем, кто любит повводить команды в консоли) А теперь плавно перейдем к установке.</p></i>
-<table>
- <tbody>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="400px"><b><i># yum install -y rdesktop</i></b></td>
-    <td align="Left" style="color:#00ff15" width="600px"><b><i>Команда установки пакета rdesktop</i></b></td>
-   </tr>
-  </tbody>
-</table>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Ну и самое интересное - это команда подключения к серверу)</p></i>
-<table>
-  <tbody>
-  <tr>
-    <td align="Left" style="color:#ff0000" width="400px"><b><i># rdesktop -z -P -g 1280x900 -u USERNAME -p PASSWORD SERVER_IP</i></b></td>
-    <td align="Left" style="color:#00ff15" width="600px"><b><i>За что какие ключи отвечают?<br/>
-      1) <i style="color:#ff0000">-z</i> включает сжатие потока;<br/>
-      2) <i style="color:#ff0000">-P</i> кэширование;<br/>
-      3) <i style="color:#ff0000">-g</i> задает геометрию окна;<br/>
-      4) <i style="color:#ff0000">-u</i> имя пользователя на сервере;<br/>
-      5) <i style="color:#ff0000">-p</i> пароль.</i></b></td>
-    </tr>
-    <tr>
-      <td align="Left" style="color:#ff0000" width="400px"><b><i># rdesktop -r disk:share=/home/documents -z -P -g 1280x900 -u USERNAME -p PASSWORD SERVER_IP</i></b></td>
-      <td align="Left" style="color:#00ff15" width="600px"><b><i>При помощи ключа <i style="color:#ff0000" width="400px">"-r disk:sharename=path"</i> можно подключить любую локальную папку как и диск Windows, который можно будет увидеть в "Мой компьютер".</i></b></td>
-     </tr>
-  </tbody>
-</table>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Если к удаленному рабочему столу подключение происходит давольно часто, то можно автоматизировать данное соединение, написав простой скрипт для подключения)</p></i>
-<table>
-  <tbody>
-    <tr>
-      <th style="color:#ff0000" colspan="2" align="Left" width="1000px">#!/bin/bash<br/>rdesktop -z -P -g 1280x900 -u USERNAME -p PASSWORD SERVER_IP</th>
-    </tr>
-  </tbody>
-</table>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Ну и после его написания, не забудьте сделать его исполняемым.</p></i>
-<table>
-  <tbody>
-    <tr>
-    <td align="Left" style="color:#ff0000" width="400px"><b><i># chmod 777 remote.sh</i></b></td>
-    <td align="Left" style="color:#00ff15" width="600px"><b><i>Вместо <i style="color:#ff0000">"remote.sh"</i> прописываете название своего текстового файла с кодом.</i></b></td>
-    </tr>
-  </tbody>
-</table>
-<i style="color:rgb(255, 255, 255)"><p align="Left">Thank you!)</p></i>
+<div class="container">
+<p class="neonText1">
+Удаленный рабочий стол в ОС Linux Fedora Workstation 36
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Всем привет! Решил написать пост о том, что на Linux Fedora Worktation 36 можно установить пакет "rdesktop", с помощью которого можно подключиться по
+протоколу rdp к Windows Server.
+Конечно, в Linux Fedora есть и другие клиенты для соединения с удаленными рабочими столами: Remmina, x11vnc, TigerVNC... Данный список можно долго 
+перечислять, но далеко не все могут без проблем организовать удаленное соединение без ошибок и с качественной картинкой. Могу сказать лишь от себя, что
+rdesktop подходит тем, кто любит вводить команды в консоли) А теперь плавно перейдем к установке.
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+<a class="neonText2">yum install -y rdesktop</a> |#|#| Команда установки пакета rdesktop
+------------
+Ну и самое интересное - это команда подключения к серверу)
+------------
+<a class="neonText2">rdesktop -z -P -g 1280x900 -u USERNAME -p PASSWORD SERVER_IP</a>
+------------
+За что какие ключи отвечают?
+1) -z включает сжатие потока;
+2) -P кэширование;
+3) -g задает геометрию окна;
+4) -u имя пользователя на сервере;
+5) -p пароль.
+------------
+При помощи ключа "-r disk:<sharename>=<path>" можно подключить любую локальную папку как и диск Windows, который можно будет увидеть в "Мой компьютер".
+------------
+<a class="neonText2">rdesktop -r disk:share=/home/documents -z -P -g 1280x900 -u USERNAME -p PASSWORD SERVER_IP</a>
+------------
+Если к удаленному рабочему столу подключение происходит давольно часто, то можно автоматизировать данное соединение, написав пристой скрипт для подключения)
+<a class="neonText2">
+#!/bin/bash
+rdesktop -z -P -g 1280x900 -u USERNAME -p PASSWORD SERVER_IP</a>
+------------
+Ну и после его написания, не забудьте сделать его исполняемым.
+------------
+chmod 777 "Название скрипта(как пример <a class="neonText2">chmod 777 remote.sh</a>)"
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Thank you!)
+</p>
 </div>
-</body>
-</html>
- <br/>
-<button><i><a href="https://dimoroz772.github.io/Linux_Fedora/" style="color:#F0F8FF"><b>Back</b></a><br/><i/></button>
