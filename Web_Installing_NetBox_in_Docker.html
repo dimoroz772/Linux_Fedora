@@ -1,0 +1,102 @@
+<head>
+  <title>Installing NetBox in Docker</title>
+  <link rel="shortcut icon" href="./Fedora_Logo.png" type="image/png">
+</head>
+ <head>
+  <meta charset="utf-8">
+ </head>
+<style>
+.neonText1 {
+  color: #87CEFA;
+  text-shadow:
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1;
+}
+.neonText2 {
+  color: #00FF00;
+  text-shadow:
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400;
+}
+/* Additional styling */
+body{
+    background-color: black;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #cfcfcf;
+}
+a {
+    text-decoration: none;
+}
+p {
+  text-indent: 1.5em;
+  font-family: monospace;
+  font-weight: 500;
+  white-space: pre;
+  line-height: 2;
+  letter-spacing: 1px;
+}
+</style>
+<div class="container">
+<p class="neonText1">
+Развёртывание Web-приложения NetBox, разработанного для управления и документирования компьютерных сетей на ОС Linux Fedora 39 (Server Edition).
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Все описанные ниже действия выполнялись под пользователем root
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Всем привет! Для реализации данного проекта мне потребовалось:
+1) Подготовить ВМ с установленной связкой Docker + Portainer(инструкция: https://github.com/dimoroz772/Linux_Fedora/blob/main/Docker%2BPortainer);
+2) Клонировать, установить и запустить NetBox из репозитория.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Netbox – это Web-приложение с открытым исходным кодом, предназначенное для управления и документирования компьютерных сетей.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+<a class="neonText2">yum install -y git</a> |#|#| Команда для установка пакета "git"
+------------
+<a class="neonText2">git clone -b release https://github.com/netbox-community/netbox-docker.git</a> |#|#| Команда для клонирования на ВМ gitx-файла из NetBox-репозитория
+------------
+<a class="neonText2">cd netbox-docker</a> |#|#| Команда для перехода в каталог "netbox-docker"
+------------
+<a class="neonText2">nano docker-compose.override.yml</a> |#|#| Команда для редактирования конфигурационного файла "docker-compose.yml"
+------------
+Приведите конфигурационный файл "docker-compose.override.yml" к следующему виду и сохраните перед закрытием:
+<a class="neonText2">
+version: '3.4'
+services:
+  netbox:
+    ports:
+      - 8000:8080</a>
+------------
+<a class="neonText2">docker-compose pull</a> |#|#| Команда извлечения необходимых образов для Netbox, PostgreSQL, Redis и т.п.
+------------
+<a class="neonText2">docker-compose up</a> |#|#| Команда для запуска контейнера Netbox IPAM. После выполнения команды контейнеры могут не запуститься. Это нормально.
+------------
+<a class="neonText2">docker ps -a</a> |#|#| Команда для вывода подробной информации об установленных/настроенных контейнерах
+------------
+<a class="neonText2">docker update --restart always "имя/id контейнера"</a> |#|#| Пример: docker update --restart always 1e04b8b5e4aa |#|#| Команда для постоянного перезапуска
+контейнера, если он останавливается. Подходит для всех тех ситуаций, когда ОС была выключена/перезагружена. Примините данную команду для всех контейнеров NetBox.
+------------
+<a class="neonText2">cd /home/user/netbox-docker</a> |#|#| Команда для перехода в каталог "/home/user/netbox-docker"
+------------
+<a class="neonText2">docker compose exec netbox /opt/netbox/netbox/manage.py createsuperuser</a> |#|#| Команда для создания суперпользователя в NetBox. После ввода данной команды
+придумайте пользователя, по желанию укажите E-mail и придумайте пароль.
+------------
+Подключаться по следующему адресу: http://IP-Address VM:8000
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+На этом инструкция завершена! Спасибо за внимание!)
+</p>
+</div>
