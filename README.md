@@ -33,3 +33,5 @@
 <i> <a href="https://github.com/dimoroz772/Linux_Fedora/blob/Website/Installing_NetBox_in_Docker"><b>Installing NetBox in Docker</b></a><br/><i/>
  <br/>
 <i> <a href="https://github.com/dimoroz772/Linux_Fedora/blob/Website/Installing_HP_drivers_for_printers_and_scans"><b>Installing HP drivers for printers and scans</b></a><br/><i/>
+ <br/>
+<i> <a href="https://github.com/dimoroz772/Linux_Fedora/blob/Website/Installing_Nvidia_drivers_for_GPU"><b>Installing_Nvidia_drivers_for_GPU</b></a><br/><i/>
