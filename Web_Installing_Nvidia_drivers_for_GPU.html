@@ -1,0 +1,164 @@
+<head>
+  <title>Installing Nvidia drivers for GPU</title>
+  <link rel="shortcut icon" href="./Fedora_Logo.png" type="image/png">
+</head>
+ <head>
+  <meta charset="utf-8">
+ </head>
+<style>
+.neonText1 {
+  color: #87CEFA;
+  text-shadow:
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1;
+}
+.neonText2 {
+  color: #00FF00;
+  text-shadow:
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400;
+}
+.neonText3 {
+  color: #FF0000;
+  text-shadow:
+      0 0 1px #8B0000,
+      0 0 1px #8B0000,
+      0 0 1px #8B0000,
+      0 0 1px #8B0000,
+      0 0 1px #8B0000,
+      0 0 1px #8B0000,
+      0 0 1px #8B0000,
+      0 0 1px #8B0000;
+}
+/* Additional styling */
+body{
+    background-color: black;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #cfcfcf;
+}
+a {
+    text-decoration: none;
+}
+p {
+  text-indent: 1.5em;
+  font-family: monospace;
+  font-weight: 500;
+  white-space: pre;
+  line-height: 2;
+  letter-spacing: 1px;
+}
+</style>
+<div class="container">
+<p class="neonText1">
+Установка Nvidia драйверов на ОС Linux Fedora
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Все описанные ниже действия выполнялись под пользователем root
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+1) Установка пакетов с драйверами, которые находятся в репозиториях.
+------------
+<a class="neonText2">yum update -y && yum upgrade -y</a> |#|#| Поиск и обновление пакетов системы
+------------
+В следующем шаге используйте один из двух предоставленных репозиториев либо free, либо nonfree:
+
+<a class="neonText2">yum install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm</a> |#|#| Команда для подключение дополнительного
+free-репозитория
+------------
+<a class="neonText2">yum install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm</a> |#|#| Команда для подключение
+дополнительного nonfree-репозитория
+------------
+<a class="neonText2">lspci | grep VGA</a> |#|#| Данной командной вы сможете обнаружить GPU, определить модель вашего графического процессора и узнать через какой VGA-интерфейс
+определяется подключение.
+------------
+<a class="neonText3">ВНИМАНИЕ!!! Предоставленную ниже команду используйте для установки пакетов драйверов, для GPU Nvidia: GeForce/Quadro/Tesla!!!</a>
+
+<a class="neonText2">yum install -y akmod-nvidia</a> |#|#| Команда для установки пакетов драйверов, для GPU Nvidia: GeForce/Quadro/Tesla
+------------
+<a class="neonText3">ВНИМАНИЕ!!! Предоставленную ниже команду используйте для установки пакетов драйверов, для GPU Nvidia: GeForce 400/500!!!</a>
+
+<a class="neonText2">yum install -y xorg-x11-drv-nvidia-390xx akmod-nvidia-390xx</a> |#|#| Команда для установки пакетов драйверов, для GPU Nvidia: GeForce 400/500
+------------
+<a class="neonText3">ВНИМАНИЕ!!! Предоставленную ниже команду используйте для установки пакетов драйверов, для GPU Nvidia: GeForce 8/9/200/300!!!</a>
+
+<a class="neonText2">yum install -y xorg-x11-drv-nvidia-340xx akmod-nvidia-340xx</a> |#|#| Команда для установки пакетов драйверов, для GPU Nvidia: GeForce 8/9/200/300
+------------
+<a class="neonText2">reboot</a> |#|#| Команда для перезагрузки АРМ/VM
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+2) Установка драйверов Nvidia вручную.
+------------
+<a class="neonText2">lspci | grep VGA</a> |#|#| Данной командной вы сможете обнаружить GPU, определить модель вашего графического процессора и узнать через какой VGA-интерфейс
+определяется подключение.
+------------
+<a class="neonText3">Следующим шагом перейдите на официальный сайт Nvidia(https://www.nvidia.com/Download/index.aspx) и скачайте нужный вам установщик драйверов для GPU.</a>
+------------
+<a class="neonText2">chmod +x NVIDIA-Linux-x86_64-470.239.06.run</a> |#|#| Данной командой сделаем установочный скрипт исполняемым. Вместо "NVIDIA-Linux-x86_64-470.239.06.run" выберите
+ваш скачанный установочный скрипт.
+------------
+<a class="neonText2">yum install -y kernel-devel kernel-headers gcc make dkms acpid libglvnd-glx libglvnd-opengl libglvnd-devel pkgconfig</a> |#|#| Команда для установки дополнительных
+пакетов
+------------
+<a class="neonText2">nano /etc/modprobe.d/blacklist.conf</a> |#|#| Данной командой создадим конфигурационный файл "blacklist.conf"
+------------
+Приведите конфигурационный файл "blacklist.conf" к следующему виду:
+
+<a class="neonText2">blacklist nouveau
+options nouveau modeset=0</a>
+------------
+<a class="neonText2">nano /etc/default/grub</a> |#|#| Данной командой откроем для последующего редактирования конфигурационный файл "grub"
+------------
+Приведите конфигурационный файл "grub" к следующему виду(к строке <a class="neonText2">GRUB_CMDLINE_LINUX="rhgb quiet</a> добавьте <a class="neonText2">rd.driver.blacklist=nouveau</a>):
+<a class="neonText2">
+GRUB_TIMEOUT=5
+GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"
+GRUB_DEFAULT=saved
+GRUB_DISABLE_SUBMENU=true
+GRUB_TERMINAL_OUTPUT="console"
+GRUB_CMDLINE_LINUX="rhgb quiet rd.driver.blacklist=nouveau"
+GRUB_DISABLE_RECOVERY="true"
+GRUB_ENABLE_BLSCFG=true</a>
+------------
+<a class="neonText2">grub2-mkconfig -o /boot/grub2/grub.cfg</a> |#|#| Данной командой обновим конфигурацию grub-а
+------------
+<a class="neonText2">yum remove -y xorg-x11-drv-nouveau</a> |#|#| Данной командой удалим драйвер пакет "xorg-x11-drv-nouveau"
+------------
+<a class="neonText2">dracut --force /boot/initramfs-$(uname -r).img $(uname -r)</a> |#|#| Данной командой пересоберем ядро "initramfs"
+------------
+<a class="neonText2">systemctl set-default multi-user.target</a> |#|#| Данной командой включим текстовый многопользовательский вход в систему
+------------
+<a class="neonText2">reboot</a> |#|#| Команда для перезагрузки АРМ/VM
+------------
+После перезагрузки снова залогиньтесь под "root" пользователем и следуйте следующей инструкции.
+------------
+<a class="neonText2">./NVIDIA-Linux-x86_64-470.239.06.run</a> |#|#| Команда для запуска установочного скрипта "NVIDIA-Linux-x86_64-470.239.06.run"
+------------
+<a class="neonText3">Would you like to register the kernel module sources with DKMS? This will allow DKMS to automatically build a new module, if you install a different
+kernel later.</a> >> <a class="neonText2">Yes</a>
+------------
+<a class="neonText3">Install NVIDIA's 32-bit compatibility libraries?</a> >> <a class="neonText2">Yes</a>
+------------
+<a class="neonText3">Would you like to run the nvidia-xconfig utility to automatically update your X configuration file so that the NVIDIA x driver will be used when you
+restart X? Any pre-existing X configuration file will be backed up.</a> >> <a class="neonText2">Yes</a>
+------------
+<a class="neonText2">systemctl set-default graphical.target</a> |#|#| Команда для запуска графического интерфейса при старте системы
+------------
+<a class="neonText2">reboot</a> |#|#| Команда для перезагрузки АРМ/VM
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+На этом гайд завершен! Спасибо за внимание!
+</p>
+</div>
