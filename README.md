@@ -35,4 +35,3 @@
 <i> <a href="https://github.com/dimoroz772/Linux_Fedora/blob/main/Installing_HP_drivers_for_printers_and_scans"><b>Installing HP drivers for printers and scans</b></a><br/><i/>
  <br/>
 <i> <a href="https://github.com/dimoroz772/Linux_Fedora/blob/main/Installing_Nvidia_drivers_for_GPU"><b>Installing Nvidia drivers for GPU</b></a><br/><i/>
- <
