@@ -1,0 +1,85 @@
+Установка Nvidia драйверов на ОС Linux Fedora
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Все описанные ниже действия выполнялись под пользователем root
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+1) Установка пакетов с драйверами, которые находятся в репозиториях.
+------------
+yum update -y && yum upgrade -y |#|#| Поиск и обновление пакетов системы
+------------
+В следующем шаге используйте один из двух предоставленных репозиториев либо free, либо nonfree:
+
+yum install -y https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm |#|#| Команда для подключение дополнительного free-репозитория
+------------
+yum install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm |#|#| Команда для подключение дополнительного nonfree-репозитория
+------------
+lspci | grep VGA |#|#| Данной командной вы сможете обнаружить GPU, определить модель вашего графического процессора и узнать через какой VGA-интерфейс определяется подключение.
+------------
+ВНИМАНИЕ!!! Предоставленную ниже команду используйте для установки пакетов драйверов, для GPU Nvidia: GeForce/Quadro/Tesla!!!
+
+yum install -y akmod-nvidia |#|#| Команда для установки пакетов драйверов, для GPU Nvidia: GeForce/Quadro/Tesla
+------------
+ВНИМАНИЕ!!! Предоставленную ниже команду используйте для установки пакетов драйверов, для GPU Nvidia: GeForce 400/500!!!
+
+yum install -y xorg-x11-drv-nvidia-390xx akmod-nvidia-390xx |#|#| Команда для установки пакетов драйверов, для GPU Nvidia: GeForce 400/500
+------------
+ВНИМАНИЕ!!! Предоставленную ниже команду используйте для установки пакетов драйверов, для GPU Nvidia: GeForce 8/9/200/300!!!
+
+yum install -y xorg-x11-drv-nvidia-340xx akmod-nvidia-340xx |#|#| Команда для установки пакетов драйверов, для GPU Nvidia: GeForce 8/9/200/300
+------------
+reboot |#|#| Команда для перезагрузки АРМ/VM
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+2) Установка драйверов Nvidia вручную.
+------------
+lspci | grep VGA |#|#| Данной командной вы сможете обнаружить GPU, определить модель вашего графического процессора и узнать через какой VGA-интерфейс определяется подключение.
+------------
+Следующим шагом перейдите на официальный сайт Nvidia(https://www.nvidia.com/Download/index.aspx) и скачайте нужный вам установщик драйверов для GPU.
+------------
+chmod +x NVIDIA-Linux-x86_64-470.239.06.run |#|#| Данной командой сделаем установочный скрипт исполняемым. Вместо "NVIDIA-Linux-x86_64-470.239.06.run" выберите ваш скачанный установочный скрипт.
+------------
+yum install -y kernel-devel kernel-headers gcc make dkms acpid libglvnd-glx libglvnd-opengl libglvnd-devel pkgconfig |#|#| Команда для установки дополнительных пакетов
+------------
+nano /etc/modprobe.d/blacklist.conf |#|#| Данной командой создадим конфигурационный файл "blacklist.conf"
+------------
+Приведите конфигурационный файл "blacklist.conf" к следующему виду:
+
+blacklist nouveau
+options nouveau modeset=0
+------------
+nano /etc/default/grub |#|#| Данной командой откроем для последующего редактирования конфигурационный файл "grub"
+------------
+Приведите конфигурационный файл "grub" к следующему виду:
+
+GRUB_TIMEOUT=5
+GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"
+GRUB_DEFAULT=saved
+GRUB_DISABLE_SUBMENU=true
+GRUB_TERMINAL_OUTPUT="console"
+GRUB_CMDLINE_LINUX="rhgb quiet rd.driver.blacklist=nouveau"
+GRUB_DISABLE_RECOVERY="true"
+GRUB_ENABLE_BLSCFG=true
+------------
+grub2-mkconfig -o /boot/grub2/grub.cfg |#|#| Данной командой обновим конфигурацию grub-а
+------------
+yum remove -y xorg-x11-drv-nouveau |#|#| Данной командой удалим драйвер пакет "xorg-x11-drv-nouveau"
+------------
+dracut --force /boot/initramfs-$(uname -r).img $(uname -r) |#|#| Данной командой пересоберем ядро "initramfs"
+------------
+systemctl set-default multi-user.target |#|#| Данной командой включим текстовый многопользовательский вход в систему
+------------
+reboot |#|#| Команда для перезагрузки АРМ/VM
+------------
+После перезагрузки снова залогиньтесь под "root" пользователем и следуйте следующей инструкции.
+------------
+./NVIDIA-Linux-x86_64-470.239.06.run |#|#| Команда для запуска установочного скрипта "NVIDIA-Linux-x86_64-470.239.06.run"
+------------
+Would you like to register the kernel module sources with DKMS? This will allow DKMS to automatically build a new module, if you install a different kernel later. >> Yes
+------------
+Install NVIDIA's 32-bit compatibility libraries? >> Yes
+------------
+Would you like to run the nvidia-xconfig utility to automatically update your X configuration file so that the NVIDIA x driver will be used when you restart X? Any pre-existing X configuration file will be backed up. >> Yes
+------------
+systemctl set-default graphical.target |#|#| Команда для запуска графического интерфейса при старте системы
+------------
+reboot |#|#| Команда для перезагрузки АРМ/VM
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+На этом гайд завершен! Спасибо за внимание!
