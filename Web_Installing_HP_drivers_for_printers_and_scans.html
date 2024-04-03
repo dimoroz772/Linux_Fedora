@@ -1,0 +1,76 @@
+<head>
+  <title>Install_HP_drivers_for_printers_and_scans</title>
+  <link rel="shortcut icon" href="./Fedora_Logo.png" type="image/png">
+</head>
+ <head>
+  <meta charset="utf-8">
+ </head>
+<style>
+.neonText1 {
+  color: #87CEFA;
+  text-shadow:
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1,
+      0 0 1px #4169E1;
+}
+.neonText2 {
+  color: #00FF00;
+  text-shadow:
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400,
+      0 0 1px #006400;
+}
+/* Additional styling */
+body{
+    background-color: black;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #cfcfcf;
+}
+a {
+    text-decoration: none;
+}
+p {
+  text-indent: 1.5em;
+  font-family: monospace;
+  font-weight: 500;
+  white-space: pre;
+  line-height: 2;
+  letter-spacing: 1px;
+}
+</style>
+<div class="container">
+<p class="neonText1">
+Установка драйверов для принтеров/сканеров HP на ОС Linux Fedora
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Все описанные ниже действия выполнялись под пользователем root
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+<a class="neonText2">yum search hplip</a> |#|#| Команда для поиска пакета "hplip" в подключенных репозиториях ОС
+------------
+<a class="neonText2">yum install -y hplip hplip-gui</a> |#|#| Команда для установки пакетов "hplip" and "hplip-gui"
+------------
+<a class="neonText2">hp-setup</a> |#|#| Данная команда запускает ПО. Также можно воспользоваться запуском ПО через графический интерфейс.
+------------
+<a class="neonText2">hp-setup -b usb</a> |#|#| Воспользуйтесь данной командной для настройки/подключения принтера, если он подключен через USB-интерфейс
+------------
+<a class="neonText2">hp-setup 10.10.10.10</a> |#|#| Воспользуйтесь данной командной для настройки/подключения принтера, если он подключен к сети организации
+------------
+<a class="neonText2">hp-setup hp10.gray.home</a> |#|#| Воспользуйтесь данной командой для настройки/подключения принтера по его FQDN/Host Name
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+На этом гайд закончен! Спасибо за внимание!
+</p>
+</div>
