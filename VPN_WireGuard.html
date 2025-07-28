@@ -1,0 +1,179 @@
+<head>
+    <title>VPN_WireGuard</title>
+    <link rel="shortcut icon" href="./WG.png" type="image/png">
+  </head>
+   <head>
+    <meta charset="utf-8">
+   </head>
+  <style>
+  .neonText1 {
+    color: #87CEFA;
+    text-shadow:
+        0 0 1px #4169E1,
+        0 0 1px #4169E1,
+        0 0 1px #4169E1,
+        0 0 1px #4169E1,
+        0 0 1px #4169E1,
+        0 0 1px #4169E1,
+        0 0 1px #4169E1,
+        0 0 1px #4169E1;
+  }
+  .neonText2 {
+    color: #00FF00;
+    text-shadow:
+        0 0 1px #006400,
+        0 0 1px #006400,
+        0 0 1px #006400,
+        0 0 1px #006400,
+        0 0 1px #006400,
+        0 0 1px #006400,
+        0 0 1px #006400,
+        0 0 1px #006400;
+  }
+  .neonText3 {
+    color: #ff0000;
+    text-shadow:
+        0 0 1px #640000,
+        0 0 1px #640000,
+        0 0 1px #640000,
+        0 0 1px #640000,
+        0 0 1px #640000,
+        0 0 1px #640000,
+        0 0 1px #640000,
+        0 0 1px #640000;
+  }
+  /* Additional styling */
+  body{
+      background-color: black;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+      color: #cfcfcf;
+  }
+  a {
+      text-decoration: none;
+  }
+  p {
+    text-indent: 1.5em;
+    font-family: monospace;
+    font-weight: 500;
+    white-space: pre;
+    line-height: 2;
+    letter-spacing: 1px;
+  }
+  </style>
+  <div class="container">
+  <p class="neonText1">
+    Установка и настройка VPN-сервера на ОС Linux Fedora 42.
+    --------------------------------------------------------------------------------------------------------------------------------------------------------------
+    Все действия описанные ниже выполнялись под пользователем root.
+    --------------------------------------------------------------------------------------------------------------------------------------------------------------
+    <a class="neonText2">yum install -y NetworkManager-tui</a> |#|#| Установка пакета "nmtui" для настройки сети на АРМ/VM
+    ------------
+    Гайд по тому, как пользоваться инструментом nmtui, вы можете посмотреть в интернете.
+    ------------
+    <a class="neonText2">yum upgrade -y && reboot</a> |#|#| Команда для обновления ОС системы с последующим выполнением перезагрузки
+    ------------
+    <a class="neonText2">yum install -y wireguard-tools</a> |#|#| Команда для установки WireGuard и его зависимостей
+    ------------
+    <a class="neonText2">yum install -y kernel-devel kernel-headers</a> |#|#| Команда для обновления системы и дополнительных зависимостей
+    ------------
+    <a class="neonText2">wg --version</a> |#|#| Команда для просмотра версии WireGuard
+    ------------
+    <a class="neonText2">mkdir -p /etc/wireguard</a> |#|#| Команда для создания каталога "/etc/wireguard"
+    ------------
+    <a class="neonText2">chmod 700 /etc/wireguard</a> |#|#| Команда для выдачи 700 прав каталогу "/etc/wireguard"
+    ------------
+    <a class="neonText2">wg genkey | sudo tee /etc/wireguard/private.key</a> |#|#| Команда для генерации приватного ключа
+    ------------
+    <a class="neonText2">chmod 600 /etc/wireguard/private.key</a> |#|#| Команда для выдачи 600 прав созданному ранее приватному ключу
+    ------------
+    <a class="neonText2">cat /etc/wireguard/private.key | wg pubkey | sudo tee /etc/wireguard/public.key</a> |#|#| Данной командой извлечем публичный ключ из приватного
+    ------------
+    <a class="neonText2">cat /etc/wireguard/private.key</a> |#|#| Команда для просмотра содержимого файла приватного ключа
+    ------------
+    <a class="neonText2">cat /etc/wireguard/public.key</a> |#|#| Команда для просмотра содержимого файла публичного ключа
+    ------------
+    <a class="neonText2">nano /etc/wireguard/wg0.conf</a> |#|#| С помощью данной команды создайте и приведите конфигурационный файл "wg0.conf" к следующему виду:
+    <a class="neonText3">
+    [Interface]
+    Address = 10.10.10.1/24</a> |#|#| Новая сеть
+    <a class="neonText3">SaveConfig = true
+    #PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+    #PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+    ListenPort = 51820
+    PrivateKey = OPwdq2RslCwlOXrWYnZ73lUsAvZA1O62GsmsA5WgQUg=</a> |#|#| Содержимое файла "/etc/wireguard/private.key"
+    <a class="neonText3">
+    [Peer]
+    PublicKey = K+8GllxeA8Ubiqno+ScE/HvDwj2vap8OFi2dMjZzHTQ=</a> |#|#| Содержимое файла "client_public.key". Данный файл создастся позже
+    <a class="neonText3">AllowedIPs = 10.10.10.0/24</a> |#|#| Клиенту выдастся IP-адрес из новой подсети
+    <a class="neonText3">Endpoint = 10.10.10.2:51820</a> |#|#| IP-адрес клиента из новой сети
+    ------------
+    <a class="neonText2">firewall-cmd --add-port=51820/udp --permanent</a> |#|#| Команда для открытия порта "51820/udp"
+    ------------
+    <a class="neonText2">firewall-cmd --reload</a> |#|#| Команда для приминения изменений "firewall-cmd"
+    ------------
+    <a class="neonText2">wg genkey | tee client_private.key</a> |#|#| Команда для генерации нового приватного ключа
+    ------------
+    <a class="neonText2">client_private.key | wg pubkey > client_public.key</a> |#|#| Команда для извлечения публичного ключа из приватного
+    ------------
+    <a class="neonText2">nano /etc/wireguard/client.conf</a> |#|#| С помощью данной команды создайте и приведите конфигурационный файл "client.conf" к следующему виду:
+    <a class="neonText3">
+    [Interface]
+    PrivateKey = AKLZ+QjEIAEqrXCryLEVo6CM5XGG1q20LewwSjsSCGA=</a> |#|#| Содержимое файла "client_private.key"
+    <a class="neonText3">Address = 10.10.10.2/24</a> |#|#| Второй адрес новой сети
+    <a class="neonText3">DNS = 77.88.8.8
+
+    [Peer]
+    PublicKey = 97qd1bRWAJMLk13MW5GL0ZBkqW6ltf5lc6nCZysy4mM=</a> |#|#| Содержимое файла "/etc/wireguard/public.key"
+    <a class="neonText3">Endpoint = 10.10.10.1:51820
+    AllowedIPs = 0.0.0.0/0</a>
+    --------------------------------------------------------------------------------------------------------------------------------------------------------------
+    <a class="neonText2">wg-quick up wg0</a> |#|#| Команда для запуска сетевого интерфейса WireGuard
+    ------------
+    <a class="neonText2">cd /etc/wireguard/</a> |#|#| Команда для перехода в каталог "/etc/wireguard/"
+    ------------
+    <a class="neonText2">wg-quick up ./client.conf</a> |#|#| Команда для инициализации подключения "client.conf"
+    
+    При успешном подключении, в консоли получите следующий вывод:
+    <a class="neonText3">
+    root@OVPN:/etc/wireguard# wg-quick up ./client.conf
+    [#] ip link add client type wireguard
+    [#] wg setconf client /dev/fd/63
+    [#] ip -4 address add 10.10.10.2/24 dev client
+    [#] ip link set mtu 65456 up dev client
+    [#] resolvconf -a client -m 0 -x
+    [#] wg set client fwmark 51820
+    [#] ip -4 route add 0.0.0.0/0 dev client table 51820
+    [#] ip -4 rule add not fwmark 51820 table 51820</a>
+    ------------
+    А при выполнении команды "wg show", получите значения "endpoint, allowed ips, latest handshake, transfer":
+    <a class="neonText3">
+    peer: K+8GllxeA8Ubiqno+ScE/HvDwj2vap8OFi2dMjZzHTQ=
+    endpoint: ***.***.***.***:18080
+    allowed ips: 10.10.10.0/24
+    latest handshake: 2 minutes, 5 seconds ago
+    transfer: 252 B received, 9.30 KiB sent</a>
+    ------------
+    Конфигурационный файл "clinet.conf" для импортирования на устройства будет выглядеть следующим образом:
+    <a class="neonText3">
+    [Interface]
+    PrivateKey = AKLZ+QjEIAEqrXCryLEVo6CM5XGG1q20LewwSjsSCGA=</a> |#|#| Содержимое файла "client_private.key"
+    <a class="neonText3">Address = 10.10.10.2/24</a> |#|#| IP-адрес клиента из новой сети
+    <a class="neonText3">DNS = 77.88.8.8
+
+    [Peer]
+    PublicKey = 97qd1bRWAJMLk13MW5GL0ZBkqW6ltf5lc6nCZysy4mM=</a> |#|#| Содержимое файла "/etc/wireguard/public.key"
+    <a class="neonText3">Endpoint = ***.***.***.***:51820</a> |#|#| Белый IP-address
+    <a class="neonText3">AllowedIPs = 10.10.10.0.24</a> |#|#| Подсети в которых будет находиться устройство
+    <a class="neonText3">PersistentKeepalive = 20</a> |#|#| Интервал отправки keepalive-пакетов для поддержания соединения. Он указывается в секундах.
+    ------------
+    После подключения клиента к серверу, в конфигурационном файле сервера "/etc/wireguard/wg0.conf" поменяется значение строки "Endpoint" в блоке "[Peer]".
+    В дальнейшем там будет прописан белый IP-address подключаемого устройства(клиента).
+    --------------------------------------------------------------------------------------------------------------------------------------------------------------
+    На этом инструкция завершена! Всем спасибо за внимание!
+  </p>
+  </div>
