@@ -1,0 +1,108 @@
+Установка и настройка VPN-сервера на ОС Linux Fedora 42.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Все действия описанные ниже выполнялись под пользователем root.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+yum install -y NetworkManager-tui |#|#| Установка пакета "nmtui" для настройки сети на АРМ/VM
+------------
+Гайд по тому, как пользоваться инструментом nmtui, вы можете посмотреть в интернете.
+------------
+yum upgrade -y && reboot |#|#| Команда для обновления ОС системы с последующим выполнением перезагрузки
+------------
+yum install -y wireguard-tools |#|#| Команда для установки WireGuard и его зависимостей
+------------
+yum install -y kernel-devel kernel-headers |#|#| Команда для обновления системы и дополнительных зависимостей
+------------
+wg --version |#|#| Команда для просмотра версии WireGuard
+------------
+mkdir -p /etc/wireguard |#|#| Команда для создания каталога "/etc/wireguard"
+------------
+chmod 700 /etc/wireguard |#|#| Команда для выдачи 700 прав каталогу "/etc/wireguard"
+------------
+wg genkey | sudo tee /etc/wireguard/private.key |#|#| Команда для генерации приватного ключа
+------------
+chmod 600 /etc/wireguard/private.key |#|#| Команда для выдачи 600 прав созданному ранее приватному ключу
+------------
+cat /etc/wireguard/private.key | wg pubkey | sudo tee /etc/wireguard/public.key |#|#| Данной командой извлечем публичный ключ из приватного
+------------
+cat /etc/wireguard/private.key |#|#| Команда для просмотра содержимого файла приватного ключа
+------------
+cat /etc/wireguard/public.key |#|#| Команда для просмотра содержимого файла публичного ключа
+------------
+nano /etc/wireguard/wg0.conf |#|#| С помощью данной команды создайте и приведите конфигурационный файл "wg0.conf" к следующему виду:
+    
+[Interface]
+Address = 10.10.10.1/24 |#|#| Новая сеть
+SaveConfig = true
+#PostUp = iptables -A FORWARD -i wg0 -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+#PostDown = iptables -D FORWARD -i wg0 -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+ListenPort = 51820
+PrivateKey = OPwdq2RslCwlOXrWYnZ73lUsAvZA1O62GsmsA5WgQUg= |#|#| Содержимое файла "/etc/wireguard/private.key"
+
+[Peer]
+PublicKey = K+8GllxeA8Ubiqno+ScE/HvDwj2vap8OFi2dMjZzHTQ= |#|#| Содержимое файла "client_public.key". Данный файл создастся позже
+AllowedIPs = 10.10.10.0/24 |#|#| Клиенту выдастся IP-адрес из новой подсети
+Endpoint = 10.10.10.2:51820 |#|#| IP-адрес клиента из новой сети
+------------
+firewall-cmd --add-port=51820/udp --permanent |#|#| Команда для открытия порта "51820/udp"
+------------
+firewall-cmd --reload |#|#| Команда для приминения изменений "firewall-cmd"
+------------
+wg genkey | tee client_private.key |#|#| Команда для генерации нового приватного ключа
+------------
+client_private.key | wg pubkey > client_public.key |#|#| Команда для извлечения публичного ключа из приватного
+------------
+nano /etc/wireguard/client.conf |#|#| С помощью данной команды создайте и приведите конфигурационный файл "client.conf" к следующему виду:
+    
+[Interface]
+PrivateKey = AKLZ+QjEIAEqrXCryLEVo6CM5XGG1q20LewwSjsSCGA= |#|#| Содержимое файла "client_private.key"
+Address = 10.10.10.2/24 |#|#| Второй адрес новой сети
+DNS = 77.88.8.8
+
+[Peer]
+PublicKey = 97qd1bRWAJMLk13MW5GL0ZBkqW6ltf5lc6nCZysy4mM= |#|#| Содержимое файла "/etc/wireguard/public.key"
+Endpoint = 10.10.10.1:51820
+AllowedIPs = 0.0.0.0/0
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+wg-quick up wg0 |#|#| Команда для запуска сетевого интерфейса WireGuard
+------------
+cd /etc/wireguard/ |#|#| Команда для перехода в каталог "/etc/wireguard/"
+------------
+wg-quick up ./client.conf |#|#| Команда для инициализации подключения "client.conf"
+    
+При успешном подключении, в консоли получите следующий вывод:
+
+root@OVPN:/etc/wireguard# wg-quick up ./client.conf
+[#] ip link add client type wireguard
+[#] wg setconf client /dev/fd/63
+[#] ip -4 address add 10.10.10.2/24 dev client
+[#] ip link set mtu 65456 up dev client
+[#] resolvconf -a client -m 0 -x
+[#] wg set client fwmark 51820
+[#] ip -4 route add 0.0.0.0/0 dev client table 51820
+[#] ip -4 rule add not fwmark 51820 table 51820
+------------
+А при выполнении команды "wg show", получите значения "endpoint, allowed ips, latest handshake, transfer":
+
+peer: K+8GllxeA8Ubiqno+ScE/HvDwj2vap8OFi2dMjZzHTQ=
+endpoint: ***.***.***.***:18080
+allowed ips: 10.10.10.0/24
+latest handshake: 2 minutes, 5 seconds ago
+transfer: 252 B received, 9.30 KiB sent
+------------
+Конфигурационный файл "clinet.conf" для импортирования на устройства будет выглядеть следующим образом:
+
+[Interface]
+PrivateKey = AKLZ+QjEIAEqrXCryLEVo6CM5XGG1q20LewwSjsSCGA= |#|#| Содержимое файла "client_private.key"
+Address = 10.10.10.2/24 |#|#| IP-адрес клиента из новой сети
+DNS = 77.88.8.8
+
+[Peer]
+PublicKey = 97qd1bRWAJMLk13MW5GL0ZBkqW6ltf5lc6nCZysy4mM= |#|#| Содержимое файла "/etc/wireguard/public.key"
+Endpoint = ***.***.***.***:51820 |#|#| Белый IP-address
+AllowedIPs = 10.10.10.0.24 |#|#| Подсети в которых будет находиться устройство
+PersistentKeepalive = 20 |#|#| Интервал отправки keepalive-пакетов для поддержания соединения. Он указывается в секундах.
+------------
+После подключения клиента к серверу, в конфигурационном файле сервера "/etc/wireguard/wg0.conf" поменяется значение строки "Endpoint" в блоке "[Peer]".
+В дальнейшем там будет прописан белый IP-address подключаемого устройства(клиента).
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+На этом инструкция завершена! Всем спасибо за внимание!
