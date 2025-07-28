@@ -37,3 +37,5 @@
 <i> <a href="https://github.com/dimoroz772/Linux_Fedora/blob/Website/Installing_Nvidia_drivers_for_GPU"><b>Installing Nvidia drivers for GPU</b></a><br/><i/>
  <br/>
 <i> <a href="https://github.com/dimoroz772/Linux_Fedora/blob/Website/Creating_a_binary_script"><b>Creating a binary script</b></a><br/><i/>
+ <br/>
+<i> <a href="https://github.com/dimoroz772/Linux_Fedora/blob/Website/VPN_WireGuard"><b>VPN WireGuard</b></a><br/><i/>
